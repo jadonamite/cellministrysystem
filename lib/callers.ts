@@ -6,8 +6,8 @@ import { outreachWired } from "./outreach-api";
  * their id.
  *
  * The roster is served live from `GET /api/outreach/callers` when the outreach
- * API is wired; the array below is the seed / local-dev fallback (PINs here are
- * placeholders — real ones are scrypt-hashed server-side).
+ * API is wired. This system ships with an empty local roster — every caller is
+ * created through the admin UI, so nothing is pre-seeded here.
  */
 
 export interface CallerRecord {
@@ -29,13 +29,8 @@ export interface RosterCaller {
   seniorCellName?: string | null;
 }
 
-// Stub assignments use real Group ids from the live tree (see lib/groups.ts).
-export const CALLERS: CallerRecord[] = [
-  { id: "c-kanyin", name: "Sis. Kanyin", pin: "4304", active: true, seniorCellId: "6a4757c45d8d393b7cba351d", seniorCellName: "Agape" },
-  { id: "c-amos", name: "Bro. Amos", pin: "9528", active: true, seniorCellId: "6a46840c32abf8f0df5c812b", seniorCellName: "Harvesters" },
-  { id: "c-nifemi", name: "Sis. Nifemi", pin: "3483", active: true, seniorCellId: "6a46842632abf8f0df5c8134", seniorCellName: "Pacesetters" },
-  { id: "c-emma", name: "Bro. Emma", pin: "5629", active: true }, // unassigned — all-access
-];
+/** Local fallback roster — intentionally empty; callers live in e-register. */
+export const CALLERS: CallerRecord[] = [];
 
 export function findCaller(id: string | undefined): CallerRecord | undefined {
   return id ? CALLERS.find((c) => c.id === id) : undefined;

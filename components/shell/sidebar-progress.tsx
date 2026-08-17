@@ -9,7 +9,7 @@ import { loadContacts, activePlanWindow } from "@/lib/live-data";
 export async function SidebarProgress() {
   const plan = await activePlanWindow();
   const groups = await getGroups();
-  const contacts = await loadContacts(buildTree(groups));
+  const contacts = await loadContacts();
   const reached = contacts.filter((c) => c.contactedDay !== null).length;
   const target = plan.target;
   const daysLeft = Math.max(plan.days - plan.todayIndex - 1, 0);

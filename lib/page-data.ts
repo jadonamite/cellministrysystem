@@ -8,7 +8,7 @@ export async function loadAppData() {
   const groups = await getGroups();
   const roots = buildTree(groups);
   const plan = await activePlanWindow();
-  const contacts = await loadContacts(roots);
+  const contacts = await loadContacts();
   const rollup = groupRollup(groups, roots, contacts);
   const teamColorOf = teamColorMap(groups);
 

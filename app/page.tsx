@@ -66,7 +66,7 @@ export default async function DashboardPage() {
   const groups = await getGroups();
   const roots = buildTree(groups);
   const plan = planWindow(activeEvent);
-  const contacts = await loadContacts(roots);
+  const contacts = await loadContacts();
 
   const daily = dailySeries(contacts, plan);
   const pace = paceSeries(daily, plan);

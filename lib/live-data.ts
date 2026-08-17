@@ -1,14 +1,14 @@
 import { cookies } from "next/headers";
 import { outreachWired } from "./outreach-api";
 import { getEvent } from "./events";
-import { generateContacts, dayIndexIn, planWindow, type PlanWindow } from "./data";
-import type { Contact, ContactOutcome, GroupNode } from "./types";
+import { dayIndexIn, planWindow, type PlanWindow } from "./data";
+import type { Contact, ContactOutcome } from "./types";
 
 /**
  * Live read layer. Contacts + call logs come from the e-register outreach API
- * when wired; the deterministic dummy set backs local dev / an unconfigured API.
- * A contact's dashboard fields (contactedDay, channel, outcome bucket) are
- * derived from its logs so the existing analytics work unchanged.
+ * when wired; an unconfigured API yields nothing at all — there is no seeded
+ * data in this system. A contact's dashboard fields (contactedDay, channel,
+ * outcome bucket) are derived from its logs so the analytics work unchanged.
  */
 
 interface LiveContact {
@@ -119,12 +119,13 @@ function toContact(c: LiveContact, logs: LiveLog[], w: PlanWindow): Contact {
 }
 
 /**
- * Contacts for the active event. Live from the API when wired (empty until real
- * contacts are collated); the deterministic dummy set otherwise.
+ * Contacts for the active event. Live from the API when wired; empty otherwise —
+ * this system carries no seeded records, so an unwired app renders a true blank
+ * slate rather than fabricated numbers.
  */
-export async function loadContacts(roots: GroupNode[]): Promise<Contact[]> {
+export async function loadContacts(): Promise<Contact[]> {
   const w = await activePlanWindow();
-  if (!outreachWired()) return generateContacts(roots, w);
+  if (!outreachWired()) return [];
 
   const eventId = await resolveActiveEventId();
   if (!eventId) return [];

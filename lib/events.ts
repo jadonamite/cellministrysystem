@@ -17,38 +17,34 @@ export interface OutreachEvent {
 }
 
 /**
- * Until the outreach API lands, events are defined here. The live event is
- * the one the dashboard's dummy data models.
+ * Events are defined here until they move behind the API. This system ships
+ * with none — the list is empty and every event is created by an admin.
  */
-export const EVENTS: OutreachEvent[] = [
-  {
-    id: "love-expression",
-    name: "Love Expression",
-    admin: "Admin",
-    target: 5000,
-    eventStart: "2026-07-12T09:00:00+01:00",
-    eventEnd: "2026-07-12T13:00:00+01:00",
-    campaignStart: "2026-07-01",
-    campaignDays: 11,
-    status: "live",
-  },
-  {
-    id: "convocation-august",
-    name: "Convocation Outreach",
-    admin: "Admin",
-    target: 800,
-    eventStart: "2026-08-16T08:00:00+01:00",
-    eventEnd: "2026-08-16T14:00:00+01:00",
-    campaignStart: "2026-08-03",
-    campaignDays: 14,
-    status: "upcoming",
-  },
-];
+export const EVENTS: OutreachEvent[] = [];
 
-export const LIVE_EVENT_ID = "love-expression";
+/**
+ * Stand-in for "no event selected", so the plan-window maths and the shell keep
+ * rendering against an empty list instead of crashing on `EVENTS[0]`. Its window
+ * is a single zero-target day, which reads as a blank dashboard.
+ */
+export const NO_EVENT: OutreachEvent = {
+  id: "none",
+  name: "No active event",
+  admin: "—",
+  target: 0,
+  eventStart: "1970-01-01T00:00:00Z",
+  eventEnd: "1970-01-01T00:00:00Z",
+  campaignStart: "1970-01-01",
+  campaignDays: 1,
+  status: "upcoming",
+};
+
+/** Id of the currently live event, or the placeholder when there is none. */
+export const LIVE_EVENT_ID =
+  EVENTS.find((e) => e.status === "live")?.id ?? NO_EVENT.id;
 
 export function getEvent(id: string | undefined): OutreachEvent {
-  return EVENTS.find((e) => e.id === id) ?? EVENTS[0];
+  return EVENTS.find((e) => e.id === id) ?? EVENTS[0] ?? NO_EVENT;
 }
 
 export function fmtEventDay(e: OutreachEvent): string {
