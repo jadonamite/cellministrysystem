@@ -24,7 +24,7 @@ export default async function MessagesPage() {
   }));
 
   const teams = rollup
-    .filter((r) => r.level === "TEAM")
+    .filter((r) => r.depth === 0)
     .map((t) => ({ id: t.id, name: t.name }));
 
   return (

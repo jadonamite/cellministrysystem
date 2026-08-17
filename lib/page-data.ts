@@ -16,7 +16,9 @@ export async function loadAppData() {
   const originOf: Record<string, string> = {};
   const colorOf: Record<string, string> = {};
   const teamOf: Record<string, string> = {};
-  // group id → its senior-cell ancestor id (for caller scoping); "" if none.
+  // unit id → its immediate parent id, used for leader scoping; "" at a root.
+  // Level-agnostic on purpose: a leader is bound to a unit at any depth, so
+  // this can no longer look for a level literally named "Senior Cell".
   const seniorOf: Record<string, string> = {};
   for (const [id, chain] of ancestry) {
     const team = chain[chain.length - 1];
@@ -24,7 +26,7 @@ export async function loadAppData() {
       chain.length > 1 ? `${chain[0].name} · ${team.name}` : chain[0].name;
     colorOf[id] = teamColorOf[team._id];
     teamOf[id] = team._id;
-    seniorOf[id] = chain.find((g) => g.level === "SENIOR_CELL")?._id ?? "";
+    seniorOf[id] = chain[1]?._id ?? "";
   }
 
   return { groups, roots, contacts, rollup, teamColorOf, originOf, colorOf, teamOf, seniorOf, plan };

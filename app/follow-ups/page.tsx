@@ -26,7 +26,7 @@ export default async function FollowupsPage({
   const sp = await searchParams;
   const { contacts, rollup, originOf, colorOf, teamOf, plan } = await loadAppData();
   const teams = rollup
-    .filter((r) => r.level === "TEAM")
+    .filter((r) => r.depth === 0)
     .map((t) => ({ id: t.id, name: t.name }));
 
   let rows = dueFollowups(contacts, plan);

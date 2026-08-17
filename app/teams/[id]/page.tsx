@@ -17,7 +17,7 @@ export default async function TeamPage({
   const { rollup, contacts, teamColorOf, originOf, colorOf, teamOf, plan } =
     await loadAppData();
 
-  const team = rollup.find((r) => r.id === id && r.level === "TEAM");
+  const team = rollup.find((r) => r.id === id && r.depth === 0);
   if (!team) notFound();
 
   const color = teamColorOf[team.id];

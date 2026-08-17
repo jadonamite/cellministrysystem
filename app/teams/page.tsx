@@ -9,7 +9,7 @@ export const metadata = { title: "Teams · Outreach Call Center" };
 export default async function TeamsPage() {
   const { rollup, teamColorOf } = await loadAppData();
   const teams = rollup
-    .filter((r) => r.level === "TEAM")
+    .filter((r) => r.depth === 0)
     .sort((a, b) => b.reached - a.reached);
 
   return (

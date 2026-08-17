@@ -20,11 +20,12 @@ export default async function SettingsPage() {
   const inviteTemplate = store.get("invite_template")?.value ?? DEFAULT_INVITE;
   const session = await getSession();
 
-  // Senior cells (with their team name) for the caller-scope picker.
+  // Units a leader can be bound to — anything below the root, at any depth,
+  // labelled with the branch it sits in. No longer restricted to one level.
   const groups = await getGroups();
   const ancestry = ancestryMap(groups);
   const seniorCells = groups
-    .filter((g) => g.level === "SENIOR_CELL")
+    .filter((g) => g.parentId !== null)
     .map((g) => {
       const chain = ancestry.get(g._id) ?? [];
       const team = chain[chain.length - 1];

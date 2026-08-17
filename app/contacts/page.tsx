@@ -53,7 +53,7 @@ export default async function ContactsPage({
   const isAdmin = session?.role === "admin";
   const { contacts, rollup, originOf, colorOf, teamOf, seniorOf, plan } = await loadAppData();
   const teams = rollup
-    .filter((r) => r.level === "TEAM")
+    .filter((r) => r.depth === 0)
     .map((t) => ({ id: t.id, name: t.name }));
 
   // Caller scope: a caller assigned to a senior cell only sees its contacts.

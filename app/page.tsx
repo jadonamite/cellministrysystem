@@ -144,7 +144,7 @@ export default async function DashboardPage() {
   }
 
   const teamSlices: TeamSlice[] = rollup
-    .filter((r) => r.level === "TEAM")
+    .filter((r) => r.depth === 0)
     .sort((a, b) => b.total - a.total)
     .map((t) => ({ id: t.id, name: t.name, total: t.total, color: teamColorOf[t.id] }));
 
