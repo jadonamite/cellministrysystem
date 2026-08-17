@@ -7,8 +7,8 @@ Companion to [SPEC.md](./SPEC.md). Phases are ordered by dependency — each one
 ## Phase 0 — Foundations
 
 - [ ] Choose and provision the database (MongoDB, to match e-register's stack and the ObjectId shapes already assumed in the code)
-- [ ] Data access layer + connection pooling suited to serverless
-- [ ] **Tenant scoping enforced in the data layer** — every query filtered by tenant, not per-call-site
+- [x] Data access layer + connection pooling suited to serverless
+- [x] **Tenant scoping enforced in the data layer** — every query filtered by tenant, not per-call-site
 - [ ] Seed the levels table with the seven-level chain (Zone → Group → Chapter → PCF → Team* → Senior Cell* → Cell)
 - [ ] Environment variables and Vercel project (KayProject account — note the dead `binary` decoy under jadonamites-projects)
 
@@ -23,12 +23,12 @@ Companion to [SPEC.md](./SPEC.md). Phases are ordered by dependency — each one
 
 *Everything else depends on this. Do it first and completely.*
 
-- [ ] Replace `GroupLevel` enum with the `Level` + `Unit` types in `lib/types.ts`
-- [ ] Rewrite `lib/groups.ts`: read units from own DB, build arbitrary-depth tree, keep `ancestryMap` / `leafNodes` working
+- [x] Replace `GroupLevel` enum with the `Level` + `Unit` types in `lib/types.ts`
+- [x] Rewrite `lib/groups.ts`: read units from own DB, build arbitrary-depth tree, keep `ancestryMap` / `leafNodes` working
 - [ ] Generalise `groupRollup` in `lib/data.ts` off the three-level assumption
-- [ ] Unit CRUD: create (ground-up, parent = any higher rank), rename, archive
-- [ ] Re-parent operation
-- [ ] Promote operation: raise level, stamp `promotedAt`, re-parent children, write history row
+- [x] Unit CRUD: create (ground-up, parent = any higher rank), rename, archive
+- [x] Re-parent operation
+- [x] Promote operation: raise level, stamp `promotedAt`, re-parent children, write history row
 - [ ] Migration script: import e-register's 19 groups, create Zone/Group/Chapter/PCF above them
 - [ ] Tree management UI (admin)
 
