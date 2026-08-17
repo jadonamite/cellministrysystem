@@ -8,8 +8,16 @@ Companion to [SPEC.md](./SPEC.md). Phases are ordered by dependency — each one
 
 - [ ] Choose and provision the database (MongoDB, to match e-register's stack and the ObjectId shapes already assumed in the code)
 - [ ] Data access layer + connection pooling suited to serverless
+- [ ] **Tenant scoping enforced in the data layer** — every query filtered by tenant, not per-call-site
 - [ ] Seed the levels table with the seven-level chain (Zone → Group → Chapter → PCF → Team* → Senior Cell* → Cell)
 - [ ] Environment variables and Vercel project (KayProject account — note the dead `binary` decoy under jadonamites-projects)
+
+## Phase 0b — Signup and seeding
+
+- [ ] Admin signup: creates the tenant and its root units
+- [ ] Structure setup wizard — admin names their Zone / Group / Chapter, then builds downward
+- [ ] Seed the first tenant this way: **Zone G → Group A → FUTA Chapter**
+- [ ] Leader invitation flow
 
 ## Phase 1 — The tree
 
@@ -40,11 +48,12 @@ Companion to [SPEC.md](./SPEC.md). Phases are ordered by dependency — each one
 - [ ] Cell roster view: total members + executives + new members + invitees, counted separately
 - [ ] Add / edit / archive people; bulk add (reuse CallCenter's hardened paste parser)
 
-## Phase 4 — Attendance and the promotion engine
+## Phase 4 — The promotion engine
+
+*Read-only against e-register. This system never captures attendance — see SPEC §5.*
 
 - [ ] **New endpoint in e-register:** service attendance counts by phone over a date range
 - [ ] Snapshot job pulling those counts into this DB (scheduled, not on render)
-- [ ] Cell meeting records: date, attendance, first-timers, offering, testimonies
 - [ ] Eligibility rules: invitee → new member, new member → member (>3 services), member → BST (3 referrals at member)
 - [ ] "Ready for promotion" queue on the leader dashboard, with the evidence behind each
 - [ ] Confirm / dismiss, writing the full `Promotion` audit row
@@ -59,7 +68,19 @@ Companion to [SPEC.md](./SPEC.md). Phases are ordered by dependency — each one
 - [ ] Leaderboard reworked from call volume to growth
 - [ ] Reports rolled up the hierarchy
 
-## Phase 6 — Cleanup
+## Phase 6 — UI refactor
+
+*Apple aesthetic, lavender purple, glossy. See SPEC §9. Can start in parallel once Phase 1 lands.*
+
+- [ ] Replace the palette: single lavender-purple accent, white text, retire the royal-blue / violet / teal / amber team colours
+- [ ] Surface system: glossy buttons and modals built from soft shadow, subtle gradient, light top edge
+- [ ] Rebuild the shell — sidebar, bottom nav, headers — on generous space rather than borders and nested cards
+- [ ] Overview screens reduced to a few large, calm numbers; detail moved one tap deeper into modals
+- [ ] Recharts restyled to the single-accent system
+- [ ] Motion pass: transitions that explain origin, nothing decorative
+- [ ] Typography scale — hierarchy by weight and size, not colour
+
+## Phase 7 — Cleanup
 
 - [ ] Delete outreach remnants: contacts, logs, outcomes, follow-ups, SMS composer, collation report, campaign windows
 - [ ] Rewrite `README.md`, `CLAUDE.md`, `AGENTS.md` for this system
@@ -69,7 +90,7 @@ Companion to [SPEC.md](./SPEC.md). Phases are ordered by dependency — each one
 
 ## Blocking on you
 
-Answers needed before Phase 0 and Phase 1 respectively — the rest can proceed on the assumptions recorded in SPEC.md §9.
+The rest proceeds on the assumptions recorded in SPEC.md §10.
 
-1. **Which Zone / Group / Chapter is this deployment?** — needed to seed the root units.
-2. **Leader login: PIN or password?** — PIN is lower friction on a phone; a password is safer for a login that can see a whole chapter.
+1. **Light, dark, or both?** — needed before Phase 6.
+2. **Leader login: PIN or password?** — needed before Phase 2. PIN is lower friction on a phone; a password is safer for a login that can see a whole chapter.

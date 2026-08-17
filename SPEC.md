@@ -6,23 +6,45 @@
 
 ## 1. What this system is
 
-A growth-tracking system for cell ministry: it holds the **structure** (who reports to whom, all the way from Zone down to an individual member) and the **people** (members, new members, invitees, and the executives who lead them), and it measures whether cells are actually growing.
+**A monitoring and tracking system.** It answers *"is this cell growing, and who is ready to move up?"* — it does not capture attendance.
 
-It is **not** an attendance register. That is e-register's job.
+It holds the **structure** (who reports to whom, from Zone down to an individual member) and the **people** (members, new members, invitees, and the executives who lead them), and it measures movement through both.
+
+> **It never takes attendance.** No register, no marking people present, no roll call. Attendance is captured in e-register and read from there. If a screen in this system asks a leader to mark who showed up, that screen is wrong.
+
+What a leader actually *does* here: maintain their roster, confirm promotions, and watch their cell's trend. Everything else is read-only monitoring.
 
 ### Boundary with e-register
 
 | | e-register | cellministrysystem |
 |---|---|---|
-| Service attendance | **owns** | reads |
-| Programme attendance (invitees) | **owns** | reads |
+| Capturing attendance (services, programmes) | **owns** | never |
 | Org hierarchy (Zone → … → Cell) | consumes | **owns** |
 | Members, new members, invitees | — | **owns** |
 | Executive roles (CL, ACL, BST, CS, CFC) | — | **owns** |
-| Cell meeting records | — | **owns** |
 | Promotion eligibility + history | — | **owns** |
+| Growth metrics and roll-ups | — | **owns** |
 
 Two separate databases. The join key between them is **phone number**, because that is what e-register already keys programme attendance on.
+
+---
+
+## 1a. Tenancy
+
+**Every zone is a tenant and seeds its own structure.** Nothing about a specific zone is hardcoded — an admin signs up, names their Zone / Group / Chapter, and the tree grows from there. That is what makes the system deployable elsewhere without a rewrite, alongside the data-driven levels of §2.
+
+```ts
+interface Tenant {
+  id: string;
+  name: string;
+  rootUnitId: string;   // the Zone
+  createdAt: string;
+}
+```
+
+Every `Unit`, `Person`, and `Promotion` carries a `tenantId`. Every query is filtered by the session's tenant — no exceptions. Cross-tenant reads are the one bug class that would be unrecoverable, so tenant scoping belongs in the data access layer, not in individual queries.
+
+**Working data for now:** `Zone G → Group A → FUTA Chapter`. Seeded through the normal signup path, not as a special case — we are the first tenant, not a hardcoded one.
 
 ---
 
@@ -221,24 +243,15 @@ interface Promotion {
 
 ---
 
-## 5. Attendance — the recommendation, and why
+## 5. Attendance — read only, always
 
-**Recommendation: read e-register's attendance API. Do not duplicate service attendance here.**
+This system **reads** attendance and **never captures** it. e-register is the register; this is the monitor.
 
 Reasoning:
 
-1. **The rule you wrote is about service attendance.** "Attended service above three times" is not cell-meeting attendance. Only e-register knows it. Logging it here would mean answering the question with the wrong data.
-2. **Duplication guarantees disagreement.** If leaders mark attendance in both systems, the two numbers will diverge within weeks, and neither will be trusted. Whichever system the leader touches last wins — which is not a rule anyone can reason about.
+1. **The rule is about service attendance.** "Attended service above three times" is something only e-register knows. Capturing a parallel number here would answer the question with the wrong data.
+2. **Duplication guarantees disagreement.** Two attendance figures for the same people diverge within weeks and neither gets trusted — whichever system was touched last wins, which is not a rule anyone can reason about.
 3. **The join already exists.** e-register keys programme attendance by phone. Matching is a lookup, not an integration project.
-
-**But the two systems track different attendance, and both are needed:**
-
-| Attendance | Owner | Drives |
-|---|---|---|
-| **Service** (Sunday, midweek, programmes) | e-register | promotion eligibility |
-| **Cell meeting** (weekly cell gathering) | cellministrysystem | growth metrics, leader accountability |
-
-These are not the same event and neither replaces the other. Cell meeting attendance is logged here because e-register does not model cell meetings at all.
 
 **Weak-network mitigation:** eligibility is computed by a scheduled job that snapshots service counts into this database, not by a live call during page render. The dashboard reads the snapshot. A stalled e-register never blocks a leader's page — it only means the queue is a day stale, which is fine for a rule measured in weeks.
 
@@ -285,24 +298,45 @@ Authorisation is one predicate: **can this session's unit reach that unit by des
 - Levels registry and generic Unit tree, with create / promote / re-parent
 - Person model with three classes, executive roles, referral chain
 - Promotion engine: detection, queue, confirmation, audit trail
-- Cell meeting records
 - Growth analytics: attendance trend, new members added, retention, multiplication events
-- Own database + data access layer
+- Own database + data access layer, tenant-scoped
+- Tenant signup and structure seeding
 
 ---
 
 ## 8. Migration
 
 1. Seed the levels table with the seven-level chain above.
-2. Import e-register's existing groups once: `TEAM` → Team, `SENIOR_CELL` → Senior Cell, `CELL` → Cell.
-3. Create the Zone / Group / Chapter / PCF units above them and re-parent the imported Teams.
+2. Sign up the first tenant through the normal flow, naming **Zone G → Group A → FUTA Chapter**.
+3. Import e-register's existing groups once into that tenant: `TEAM` → Team, `SENIOR_CELL` → Senior Cell, `CELL` → Cell; re-parent the imported Teams under the FUTA Chapter's PCF.
 4. From then on, **cellministrysystem is the source of truth for structure.** e-register reads from here rather than keeping its own copy — otherwise the two trees drift, and promotions make the drift worse.
 
 ---
 
-## 9. Open questions
+## 9. Design direction
 
-1. **Which zone/group/chapter is this deployment?** Needed to seed the root units.
+**Apple aesthetic: clean, premium, calm.** Lavender purple and white text, glossy buttons and modals.
+
+The governing constraint, in Jadon's words: **"a lot without feeling like a lot."** These screens carry dense information — a zone pastor looking at hundreds of cells, a promotion queue, roll-ups at six levels. Density is the requirement; the *feeling* of density is the enemy.
+
+How that translates:
+
+| Principle | In practice |
+|---|---|
+| **Generous space** | Whitespace does the separating. No boxes inside boxes, no borders where space will do. |
+| **One accent** | Lavender purple carries hierarchy, state and emphasis. Resist adding a second hue to mean something. |
+| **Depth, not decoration** | Glossy buttons and modals get their weight from soft shadow, subtle gradient and a light top edge — not from ornament. |
+| **Progressive disclosure** | The overview is a few large, calm numbers. Detail lives one tap deeper, in modals. A leader should never meet all of it at once. |
+| **Motion as explanation** | Transitions show where a thing came from. Nothing bounces or decorates. |
+| **Typographic hierarchy** | Weight and scale, not colour and rules, establish what matters. |
+
+This replaces CallCenter's royal-blue / violet / teal / amber team palette wholesale. Per-team colour coding is dropped — it fights a single-accent system and is the fastest route to feeling like a lot.
+
+---
+
+## 10. Open questions
+
+1. **Light, dark, or both?** "Lavender purple and white text" reads as either a light lavender-tinted surface with deep purple accents, or a dark purple surface with white text throughout.
 2. **Can a person belong to more than one cell?** Assumed no.
 3. **When a cell is promoted to senior cell, do its members move to a new child cell, or stay?** Assumed a new child cell is created and members move down.
 4. **"Attended service above three times" — ever, or within a window?** Assumed ever, all-time.
