@@ -34,9 +34,12 @@ Companion to [SPEC.md](./SPEC.md). Phases are ordered by dependency — each one
 
 ## Phase 2 — Scoped access
 
-- [ ] `Session` becomes `{ role: "admin" } | { role: "leader", personId, unitId, name }`
+- [ ] `Session` becomes `{ role: "admin", tenantId } | { role: "leader", tenantId, personId, unitId, name }`
 - [ ] `subtree(unitId)` + the "can this session reach that unit" predicate
 - [ ] Retire the caller PIN gate and caller bar; leader login replaces them
+- [ ] **Credential by level rank:** PIN for cell leaders (reuse the scrypt-hashed caller PIN path), password for senior cell and above
+- [ ] Promotion forces a password set on next sign-in when a cell becomes a senior cell
+- [ ] Password reset flow; admin-initiated PIN reset
 - [ ] Apply scoping to every page — one dashboard, scoped by the session's unit
 - [ ] Verify a cell leader cannot read a sibling cell (test this explicitly, it is the whole security model)
 
@@ -70,7 +73,8 @@ Companion to [SPEC.md](./SPEC.md). Phases are ordered by dependency — each one
 
 ## Phase 6 — UI refactor
 
-*Apple aesthetic, lavender purple, glossy. See SPEC §9. Can start in parallel once Phase 1 lands.*
+*Apple aesthetic, lavender purple, glossy. See SPEC §9.*
+*Blocked: awaiting a reference image from Jadon for the background / theme.*
 
 - [ ] Replace the palette: single lavender-purple accent, white text, retire the royal-blue / violet / teal / amber team colours
 - [ ] Surface system: glossy buttons and modals built from soft shadow, subtle gradient, light top edge
@@ -90,7 +94,6 @@ Companion to [SPEC.md](./SPEC.md). Phases are ordered by dependency — each one
 
 ## Blocking on you
 
-The rest proceeds on the assumptions recorded in SPEC.md §10.
+1. **A reference image for the background / theme** — blocks Phase 6 only. Phases 0–5 are unblocked.
 
-1. **Light, dark, or both?** — needed before Phase 6.
-2. **Leader login: PIN or password?** — needed before Phase 2. PIN is lower friction on a phone; a password is safer for a login that can see a whole chapter.
+The rest proceeds on the assumptions recorded in SPEC.md §10.

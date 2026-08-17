@@ -10,6 +10,9 @@
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-sans);
+  --font-script: var(--font-script);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -49,98 +52,202 @@
 }
 
 /*
- * CallCenter design tokens.
- * Royal blue accent; teams carry violet / teal / amber (colorblind-validated
- * in both modes — amber & teal stay legal in light mode via visible labels).
+ * Cell Ministry System design tokens.
+ *
+ * Light-first: a white canvas lit by irradiance — soft coloured light sources
+ * bleeding in from the edges, never a gradient sweeping across the page.
+ * Lavender purple carries hierarchy and state; gold marks the one figure per
+ * screen that needs a human to act. Teams and cells stay colour-coded, with a
+ * cell inheriting its team's hue so colour encodes the hierarchy itself.
  */
 :root {
-  --background: #f5f5f7;
-  --foreground: #16161a;
+  --background: #FBFAFE;
+  --foreground: #1A1526;
   --card: #ffffff;
-  --card-foreground: #16161a;
+  --card-foreground: #1A1526;
   --popover: #ffffff;
-  --popover-foreground: #16161a;
-  --primary: #2f5ce6;
+  --popover-foreground: #1A1526;
+  --primary: #7C4DDB;
   --primary-foreground: #ffffff;
-  --secondary: #ededf0;
-  --secondary-foreground: #16161a;
-  --muted: #ededf0;
-  --muted-foreground: #6e6e78;
-  --accent: #e8edfd;
-  --accent-foreground: #2448b8;
-  --destructive: #d4373e;
-  --border: #e7e7ea;
-  --input: #e7e7ea;
-  --ring: #2f5ce6;
-  --chart-1: #2f5ce6;
-  --chart-2: #6d4fd4;
-  --chart-3: #1baf7a;
-  --chart-4: #eda100;
-  --chart-5: #b3b2a9;
+  --secondary: #F1EEF8;
+  --secondary-foreground: #1A1526;
+  --muted: #F1EEF8;
+  --muted-foreground: #6B6180;
+  --accent: #F1EBFE;
+  --accent-foreground: #5B32B0;
+  --destructive: #D4373E;
+  --border: #E9E4F5;
+  --input: #E9E4F5;
+  --ring: #7C4DDB;
+  --chart-1: #7C4DDB;
+  --chart-2: #0E9B84;
+  --chart-3: #C98A18;
+  --chart-4: #D4568A;
+  --chart-5: #3B6FD4;
   --radius: 1rem;
   --sidebar: #ffffff;
-  --sidebar-foreground: #16161a;
-  --sidebar-primary: #2f5ce6;
+  --sidebar-foreground: #1A1526;
+  --sidebar-primary: #7C4DDB;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #e8edfd;
-  --sidebar-accent-foreground: #2448b8;
-  --sidebar-border: #e7e7ea;
-  --sidebar-ring: #2f5ce6;
+  --sidebar-accent: #F1EBFE;
+  --sidebar-accent-foreground: #5B32B0;
+  --sidebar-border: #E9E4F5;
+  --sidebar-ring: #7C4DDB;
 
-  /* team classification hues */
-  --team-1: #6d4fd4; /* violet */
-  --team-2: #1baf7a; /* teal */
-  --team-3: #eda100; /* amber */
-  --team-4: #e87ba4; /* magenta */
-  --team-5: #eb6834; /* orange */
-  --surface-2: #fafafb;
+  /* the one highlight — reserved for the figure that needs action */
+  --gold: #B57F14;
+  --gold-soft: #FBF1DC;
+
+  /* team hues; cells inherit their team's hue (see --cell-tint) */
+  --team-1: #6D4FD4; /* violet */
+  --team-2: #0E9B84; /* teal   */
+  --team-3: #C98A18; /* amber  */
+  --team-4: #D4568A; /* rose   */
+  --team-5: #3B6FD4; /* blue   */
+  --cell-tint: 88%;  /* how far a cell chip washes toward the surface */
+
+  --surface-2: #F7F5FC;
+  --gloss-top: rgba(255, 255, 255, 0.9);
+  --gloss-edge: rgba(124, 77, 219, 0.28);
+  --lift: 0 12px 34px -14px rgba(60, 30, 110, 0.24);
+
+  /* irradiance — discrete light sources, tuned for a white ground */
+  --irr-1: rgba(183, 148, 246, 0.30);
+  --irr-2: rgba(255, 184, 107, 0.22);
+  --irr-3: rgba(127, 227, 232, 0.22);
+  --irr-4: rgba(255, 158, 205, 0.20);
+  --irr-veil: rgba(251, 250, 254, 0.55);
 }
 
 .dark {
-  --background: #131316;
-  --foreground: #f4f4f6;
-  --card: #1c1c21;
-  --card-foreground: #f4f4f6;
-  --popover: #222228;
-  --popover-foreground: #f4f4f6;
-  --primary: #4a74f0;
-  --primary-foreground: #ffffff;
-  --secondary: #26262c;
-  --secondary-foreground: #f4f4f6;
-  --muted: #26262c;
-  --muted-foreground: #9a9aa4;
-  --accent: #23304f;
-  --accent-foreground: #a8bdf8;
-  --destructive: #e66767;
-  --border: #ffffff14;
-  --input: #ffffff1f;
-  --ring: #4a74f0;
-  --chart-1: #4a74f0;
-  --chart-2: #9085e9;
-  --chart-3: #199e70;
-  --chart-4: #c98500;
-  --chart-5: #5c5b64;
-  --sidebar: #1c1c21;
-  --sidebar-foreground: #f4f4f6;
-  --sidebar-primary: #4a74f0;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #23304f;
-  --sidebar-accent-foreground: #a8bdf8;
-  --sidebar-border: #ffffff14;
-  --sidebar-ring: #4a74f0;
+  --background: #150C24;
+  --foreground: #FFFFFF;
+  --card: #211539;
+  --card-foreground: #FFFFFF;
+  --popover: #2E1B4D;
+  --popover-foreground: #FFFFFF;
+  --primary: #B794F6;
+  --primary-foreground: #1A0F2E;
+  --secondary: #2A1A47;
+  --secondary-foreground: #FFFFFF;
+  --muted: #2A1A47;
+  --muted-foreground: #C9BEDD;
+  --accent: #33205A;
+  --accent-foreground: #D6C2FF;
+  --destructive: #FF8FA8;
+  --border: rgba(183, 148, 246, 0.18);
+  --input: rgba(183, 148, 246, 0.24);
+  --ring: #B794F6;
+  --chart-1: #B794F6;
+  --chart-2: #4FD4BC;
+  --chart-3: #F5C563;
+  --chart-4: #FF9EC6;
+  --chart-5: #7FA9F5;
+  --sidebar: #211539;
+  --sidebar-foreground: #FFFFFF;
+  --sidebar-primary: #B794F6;
+  --sidebar-primary-foreground: #1A0F2E;
+  --sidebar-accent: #33205A;
+  --sidebar-accent-foreground: #D6C2FF;
+  --sidebar-border: rgba(183, 148, 246, 0.18);
+  --sidebar-ring: #B794F6;
 
-  --team-1: #9085e9;
-  --team-2: #199e70;
-  --team-3: #c98500;
-  --team-4: #d55181;
-  --team-5: #d95926;
-  --surface-2: #232329;
+  --gold: #F5C563;
+  --gold-soft: rgba(245, 197, 99, 0.14);
+
+  --team-1: #C4A7F5;
+  --team-2: #4FD4BC;
+  --team-3: #F5C563;
+  --team-4: #FF9EC6;
+  --team-5: #7FA9F5;
+  --cell-tint: 78%;
+
+  --surface-2: #2A1A47;
+  --gloss-top: rgba(255, 255, 255, 0.10);
+  --gloss-edge: rgba(201, 170, 255, 0.55);
+  --lift: 0 18px 50px -12px rgba(0, 0, 0, 0.62);
+
+  --irr-1: rgba(183, 148, 246, 0.40);
+  --irr-2: rgba(255, 184, 107, 0.24);
+  --irr-3: rgba(127, 227, 232, 0.20);
+  --irr-4: rgba(199, 125, 255, 0.32);
+  --irr-veil: rgba(21, 12, 36, 0.62);
+}
+
+/*
+ * Irradiance — light sources, not a gradient.
+ *
+ * Four discrete blurred lights sit off the edges of a fixed layer and bleed
+ * inward; a veil of the page's own background sits on top so the middle of the
+ * canvas stays clean. Nothing carrying data is ever painted on this: cards are
+ * opaque and float above it. That is what keeps a dense table readable while
+ * the page still glows.
+ */
+@utility irradiance {
+  position: fixed;
+  inset: -30%;
+  z-index: 0;
+  pointer-events: none;
+  filter: blur(110px);
+  background:
+    radial-gradient(26% 22% at 84% 8%, var(--irr-2) 0%, transparent 70%),
+    radial-gradient(24% 20% at 96% 40%, var(--irr-4) 0%, transparent 72%),
+    radial-gradient(30% 26% at 4% 16%, var(--irr-1) 0%, transparent 72%),
+    radial-gradient(22% 18% at 16% 86%, var(--irr-3) 0%, transparent 72%),
+    radial-gradient(34% 28% at 66% 96%, var(--irr-1) 0%, transparent 74%);
+}
+@utility irradiance-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: var(--irr-veil);
+}
+
+/* glossy surface — fill, top edge, lift. No ornament. */
+@utility glossy {
+  position: relative;
+  background: linear-gradient(180deg, var(--gloss-top) 0%, transparent 46%),
+    var(--card);
+  border: 1px solid var(--border);
+  box-shadow: var(--lift);
+  overflow: hidden;
+}
+@utility glossy-edge {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 14%;
+    right: 14%;
+    height: 1px;
+    pointer-events: none;
+    background: linear-gradient(90deg, transparent, var(--gloss-edge), transparent);
+  }
+}
+
+/* uppercase label — eyebrows, table headers, stat captions */
+@utility label-caps {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+/* the script face, used sparingly for human asides */
+@utility script {
+  font-family: var(--font-script), cursive;
+  font-weight: 500;
+  letter-spacing: 0.005em;
+  line-height: 1.25;
 }
 
 /* soft elevated card — depth by shadow in light, by tone in dark */
 @utility card-soft {
   border: 1px solid var(--border);
-  box-shadow: 0 10px 40px -12px rgb(22 22 26 / 0.06);
+  box-shadow: 0 10px 40px -12px rgb(60 30 110 / 0.10);
   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 

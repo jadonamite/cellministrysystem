@@ -14,7 +14,7 @@ import {
 } from "@/components/dashboard/collation-report";
 import { FollowupTable } from "@/components/dashboard/followup-table";
 import { ancestryMap, buildTree, getGroups } from "@/lib/groups";
-import { teamColorMap } from "@/lib/team-colors";
+import { unitColorMap } from "@/lib/team-colors";
 import {
   dailySeries,
   dueFollowups,
@@ -72,7 +72,7 @@ export default async function DashboardPage() {
   const pace = paceSeries(daily, plan);
   const rollup = groupRollup(groups, roots, contacts);
   const outcomes = outcomeBreakdown(contacts);
-  const teamColorOf = teamColorMap(groups);
+  const teamColorOf = unitColorMap(groups);
 
   const reached = contacts.filter((c) => c.contactedDay !== null);
   const called = reached.filter((c) => c.channel === "call");

@@ -12,8 +12,10 @@ export interface Stat {
   icon: "reached" | "called" | "messaged" | "connect" | "followup";
   /** weekly series rendered as a mini bar sparkline */
   spark?: number[];
-  /** hero card — solid royal blue */
+  /** hero card — solid lavender */
   hero?: boolean;
+  /** the one figure on the screen that needs a human to act — gold, once */
+  gold?: boolean;
   /** hint tone */
   trend?: "up" | "down";
 }
@@ -61,7 +63,7 @@ export function StatCards({ stats }: { stats: Stat[] }) {
             key={s.label}
             variants={fadeInUp}
             className={cn(
-              "card-soft rounded-3xl p-5",
+              "card-soft glossy-edge rounded-3xl p-5",
               s.hero
                 ? "bg-primary text-primary-foreground col-span-2 lg:col-span-1"
                 : "bg-card"
@@ -71,14 +73,23 @@ export function StatCards({ stats }: { stats: Stat[] }) {
               <span
                 className={cn(
                   "flex size-9 items-center justify-center rounded-xl",
-                  s.hero ? "bg-white/20" : "bg-accent text-accent-foreground"
+                  s.hero
+                    ? "bg-white/20"
+                    : s.gold
+                      ? "bg-gold-soft text-gold"
+                      : "bg-accent text-accent-foreground"
                 )}
               >
                 <Icon name={ICONS[s.icon]} className="size-4" />
               </span>
               {s.spark && <Sparkline data={s.spark} hero={s.hero} />}
             </div>
-            <div className="mt-4 text-[1.65rem] leading-none font-bold tabular-nums">
+            <div
+              className={cn(
+                "mt-4 text-[1.65rem] leading-none font-bold tabular-nums",
+                s.gold && !s.hero && "text-gold"
+              )}
+            >
               {s.value}
             </div>
             <p

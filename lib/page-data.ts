@@ -1,5 +1,5 @@
 import { ancestryMap, buildTree, getGroups } from "./groups";
-import { teamColorMap } from "./team-colors";
+import { unitColorMap } from "./team-colors";
 import { groupRollup } from "./data";
 import { loadContacts, activePlanWindow } from "./live-data";
 
@@ -10,7 +10,7 @@ export async function loadAppData() {
   const plan = await activePlanWindow();
   const contacts = await loadContacts();
   const rollup = groupRollup(groups, roots, contacts);
-  const teamColorOf = teamColorMap(groups);
+  const teamColorOf = unitColorMap(groups);
 
   const ancestry = ancestryMap(groups);
   const originOf: Record<string, string> = {};

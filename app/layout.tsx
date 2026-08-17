@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { Bricolage_Grotesque, Geist_Mono } from "next/font/google";
+import { Bricolage_Grotesque, Geist_Mono, Dancing_Script } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { Sidebar } from "@/components/shell/sidebar";
 import { SidebarProgress, SidebarProgressSkeleton } from "@/components/shell/sidebar-progress";
@@ -18,9 +18,15 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+/** Used sparingly, for human asides — never for data or navigation. */
+const dancingScript = Dancing_Script({
+  variable: "--font-script",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
-  title: "Outreach Call Center",
-  description: "Follow-up and data collation dashboard",
+  title: "Cell Ministry System",
+  description: "Monitoring and tracking growth across the cell hierarchy",
 };
 
 export default async function RootLayout({
@@ -36,11 +42,14 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      className={`${bricolage.variable} ${geistMono.variable} h-full`}
+      className={`${bricolage.variable} ${geistMono.variable} ${dancingScript.variable} h-full`}
       suppressHydrationWarning
     >
       <body className="flex min-h-full flex-col">
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+        {/* ambient light — data never sits on this */}
+        <div className="irradiance" aria-hidden />
+        <div className="irradiance-veil" aria-hidden />
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <Sidebar
             identity={identity}
             progress={
@@ -49,7 +58,7 @@ export default async function RootLayout({
               </Suspense>
             }
           />
-          <div className="flex-1 pb-24 md:pb-0 md:pl-16 lg:pl-60">{children}</div>
+          <div className="relative z-10 flex-1 pb-24 md:pb-0 md:pl-16 lg:pl-60">{children}</div>
           <BottomNav />
         </ThemeProvider>
       </body>

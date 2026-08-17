@@ -265,13 +265,24 @@ Extends the existing JWT session (`lib/auth.ts`), which already carries a discri
 
 ```ts
 type Session =
-  | { role: "admin" }                                  // bound to root
-  | { role: "leader"; personId: string; unitId: string; name: string };
+  | { role: "admin"; tenantId: string }                                  // bound to root
+  | { role: "leader"; tenantId: string; personId: string; unitId: string; name: string };
 ```
 
 The current `CallerSession.seniorCellId` becomes `unitId` — generalised from "which senior cell" to "which node of the tree", at any depth. **This is requirement 1 of Refactors.md** ("callers notation should be changed to cell"): a caller was already a scoped login; it becomes a unit-scoped leader login, and the scoping rule stops being senior-cell-specific.
 
-Authorisation is one predicate: **can this session's unit reach that unit by descending the tree?**
+Authorisation is one predicate: **can this session's unit reach that unit by descending the tree?** — evaluated inside the tenant.
+
+### Credentials scale with reach
+
+| Login binds to | Credential |
+|---|---|
+| A **Cell** | 4-digit PIN |
+| **Senior Cell and above** (Team, PCF, Chapter, Group, Zone) | Password |
+
+A cell leader is on a phone between meetings and sees one cell — a PIN is the right friction, and the scrypt-hashed PIN path already exists from the caller gate. A senior cell leader upward can see an entire branch, so the credential has to be worth what it unlocks. The rule is derived from the unit's level rank, not configured per person, so it stays true automatically when a cell is promoted: **promote a cell to senior cell and its leader is required to set a password on next sign-in.**
+
+Passwords need a reset flow; PINs are reset by the admin.
 
 ---
 
@@ -315,7 +326,40 @@ Authorisation is one predicate: **can this session's unit reach that unit by des
 
 ## 9. Design direction
 
-**Apple aesthetic: clean, premium, calm.** Lavender purple and white text, glossy buttons and modals.
+**Apple aesthetic: clean, premium, calm.** Dark, lavender purple, white text, glossy buttons and modals.
+
+### The palette
+
+Taken from Jadon's reference image: a deep aubergine canvas with an iridescent prismatic bloom refracting through it, white text, gold on the single most important thing.
+
+| Token | Value | Use |
+|---|---|---|
+| `canvas` | `#150C24` | Page base — deep aubergine, near-black |
+| `surface` | `#211539` | Cards, panels |
+| `surface-raised` | `#2E1B4D` | Modals, popovers, hover |
+| `stroke` | `rgba(183,148,246,.22)` | The thin lavender edge on every glossy surface |
+| `accent` | `#B794F6` | Primary lavender — buttons, active state, hierarchy |
+| `accent-bright` | `#C9AAFF` | Top edge of a glossy button, focus rings |
+| `gold` | `#F5C563` | Reserved for the single most important figure on a screen |
+| `text` | `#FFFFFF` | Body |
+| `text-muted` | `#C9BEDD` | Labels, secondary |
+| Bloom hues | `#FFB86B` `#FF9ECD` `#7FE3E8` `#C77DFF` | Ambient gradient only — never on data |
+
+### The rule that makes it work
+
+**The iridescence is ambient. Data never sits on it.**
+
+That gradient is what makes the reference beautiful, and it is also exactly what would destroy a dense table of two hundred cells. So it lives in one layer only — heavily blurred, low opacity, behind everything — while every surface carrying information sits on near-opaque purple glass above it. Colour bleeds around the data, never through it.
+
+This is the whole *"a lot without feeling like a lot"* strategy in one rule: the richness is atmosphere, the content is calm.
+
+### Gloss recipe
+
+A glossy button or modal is four things, no ornament:
+1. Fill: a subtle vertical gradient, lighter at the top
+2. Edge: a 1px `accent-bright` top border at low opacity — the light catching it
+3. Lift: a soft, wide, low-opacity shadow — never a hard drop shadow
+4. Radius: generous, consistent, Apple-scale
 
 The governing constraint, in Jadon's words: **"a lot without feeling like a lot."** These screens carry dense information — a zone pastor looking at hundreds of cells, a promotion queue, roll-ups at six levels. Density is the requirement; the *feeling* of density is the enemy.
 
@@ -323,9 +367,9 @@ How that translates:
 
 | Principle | In practice |
 |---|---|
-| **Generous space** | Whitespace does the separating. No boxes inside boxes, no borders where space will do. |
-| **One accent** | Lavender purple carries hierarchy, state and emphasis. Resist adding a second hue to mean something. |
-| **Depth, not decoration** | Glossy buttons and modals get their weight from soft shadow, subtle gradient and a light top edge — not from ornament. |
+| **Generous space** | Space does the separating. No boxes inside boxes, no borders where space will do. |
+| **One accent** | Lavender carries hierarchy, state and emphasis. Gold appears once per screen, on the figure that matters most. |
+| **Depth, not decoration** | Glossy surfaces get their weight from soft shadow, subtle gradient and a light top edge — not from ornament. |
 | **Progressive disclosure** | The overview is a few large, calm numbers. Detail lives one tap deeper, in modals. A leader should never meet all of it at once. |
 | **Motion as explanation** | Transitions show where a thing came from. Nothing bounces or decorates. |
 | **Typographic hierarchy** | Weight and scale, not colour and rules, establish what matters. |
@@ -336,8 +380,6 @@ This replaces CallCenter's royal-blue / violet / teal / amber team palette whole
 
 ## 10. Open questions
 
-1. **Light, dark, or both?** "Lavender purple and white text" reads as either a light lavender-tinted surface with deep purple accents, or a dark purple surface with white text throughout.
-2. **Can a person belong to more than one cell?** Assumed no.
-3. **When a cell is promoted to senior cell, do its members move to a new child cell, or stay?** Assumed a new child cell is created and members move down.
-4. **"Attended service above three times" — ever, or within a window?** Assumed ever, all-time.
-5. **Does a leader log in with a PIN (as callers did) or a password?** PIN is lower friction on a phone; a password is safer for someone who can see a whole chapter.
+1. **Can a person belong to more than one cell?** Assumed no.
+2. **When a cell is promoted to senior cell, do its members move to a new child cell, or stay?** Assumed a new child cell is created and members move down.
+3. **"Attended service above three times" — ever, or within a window?** Assumed ever, all-time.
