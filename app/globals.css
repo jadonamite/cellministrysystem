@@ -112,27 +112,29 @@
   --lift: 0 12px 34px -14px rgba(60, 30, 110, 0.24);
 
   /* irradiance — discrete light sources, tuned for a white ground */
-  --irr-1: rgba(183, 148, 246, 0.30);
-  --irr-2: rgba(255, 184, 107, 0.22);
-  --irr-3: rgba(127, 227, 232, 0.22);
-  --irr-4: rgba(255, 158, 205, 0.20);
-  --irr-veil: rgba(251, 250, 254, 0.55);
+  --irr-1: rgba(154, 106, 240, 0.72);
+  --irr-2: rgba(255, 168, 76, 0.62);
+  --irr-3: rgba(86, 214, 222, 0.55);
+  --irr-4: rgba(255, 122, 186, 0.58);
+  --irr-5: rgba(120, 140, 255, 0.50);
+  --irr-veil: transparent;
 }
 
 .dark {
-  --background: #150C24;
+  /* Aubergine, not black — the reference's dark is saturated purple. */
+  --background: #23104A;
   --foreground: #FFFFFF;
-  --card: #211539;
+  --card: #301764;
   --card-foreground: #FFFFFF;
-  --popover: #2E1B4D;
+  --popover: #3B1E78;
   --popover-foreground: #FFFFFF;
   --primary: #B794F6;
   --primary-foreground: #1A0F2E;
-  --secondary: #2A1A47;
+  --secondary: #3A1F72;
   --secondary-foreground: #FFFFFF;
-  --muted: #2A1A47;
-  --muted-foreground: #C9BEDD;
-  --accent: #33205A;
+  --muted: #3A1F72;
+  --muted-foreground: #CFC2EA;
+  --accent: #45268A;
   --accent-foreground: #D6C2FF;
   --destructive: #FF8FA8;
   --border: rgba(183, 148, 246, 0.18);
@@ -143,11 +145,11 @@
   --chart-3: #F5C563;
   --chart-4: #FF9EC6;
   --chart-5: #7FA9F5;
-  --sidebar: #211539;
+  --sidebar: #301764;
   --sidebar-foreground: #FFFFFF;
   --sidebar-primary: #B794F6;
   --sidebar-primary-foreground: #1A0F2E;
-  --sidebar-accent: #33205A;
+  --sidebar-accent: #45268A;
   --sidebar-accent-foreground: #D6C2FF;
   --sidebar-border: rgba(183, 148, 246, 0.18);
   --sidebar-ring: #B794F6;
@@ -162,16 +164,17 @@
   --team-5: #7FA9F5;
   --cell-tint: 78%;
 
-  --surface-2: #2A1A47;
+  --surface-2: #3A1F72;
   --gloss-top: rgba(255, 255, 255, 0.10);
   --gloss-edge: rgba(201, 170, 255, 0.55);
-  --lift: 0 18px 50px -12px rgba(0, 0, 0, 0.62);
+  --lift: 0 18px 50px -12px rgba(10, 2, 28, 0.7);
 
-  --irr-1: rgba(183, 148, 246, 0.40);
-  --irr-2: rgba(255, 184, 107, 0.24);
-  --irr-3: rgba(127, 227, 232, 0.20);
-  --irr-4: rgba(199, 125, 255, 0.32);
-  --irr-veil: rgba(21, 12, 36, 0.62);
+  --irr-1: rgba(178, 108, 255, 0.85);
+  --irr-2: rgba(255, 168, 76, 0.70);
+  --irr-3: rgba(86, 214, 222, 0.60);
+  --irr-4: rgba(255, 122, 186, 0.68);
+  --irr-5: rgba(120, 140, 255, 0.60);
+  --irr-veil: transparent;
 }
 
 /*
@@ -185,16 +188,17 @@
  */
 @utility irradiance {
   position: fixed;
-  inset: -30%;
+  inset: 0;
   z-index: 0;
   pointer-events: none;
-  filter: blur(110px);
+  filter: blur(70px) saturate(1.2);
   background:
-    radial-gradient(26% 22% at 84% 8%, var(--irr-2) 0%, transparent 70%),
-    radial-gradient(24% 20% at 96% 40%, var(--irr-4) 0%, transparent 72%),
-    radial-gradient(30% 26% at 4% 16%, var(--irr-1) 0%, transparent 72%),
-    radial-gradient(22% 18% at 16% 86%, var(--irr-3) 0%, transparent 72%),
-    radial-gradient(34% 28% at 66% 96%, var(--irr-1) 0%, transparent 74%);
+    radial-gradient(46% 40% at 88% 4%, var(--irr-2) 0%, transparent 66%),
+    radial-gradient(42% 44% at 100% 34%, var(--irr-4) 0%, transparent 68%),
+    radial-gradient(52% 46% at 2% 10%, var(--irr-1) 0%, transparent 68%),
+    radial-gradient(40% 38% at 10% 92%, var(--irr-3) 0%, transparent 68%),
+    radial-gradient(56% 48% at 72% 100%, var(--irr-1) 0%, transparent 70%),
+    radial-gradient(38% 34% at 44% 50%, var(--irr-5) 0%, transparent 72%);
 }
 @utility irradiance-veil {
   position: fixed;
