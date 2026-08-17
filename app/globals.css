@@ -1,0 +1,198 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/*
+ * CallCenter design tokens.
+ * Royal blue accent; teams carry violet / teal / amber (colorblind-validated
+ * in both modes — amber & teal stay legal in light mode via visible labels).
+ */
+:root {
+  --background: #f5f5f7;
+  --foreground: #16161a;
+  --card: #ffffff;
+  --card-foreground: #16161a;
+  --popover: #ffffff;
+  --popover-foreground: #16161a;
+  --primary: #2f5ce6;
+  --primary-foreground: #ffffff;
+  --secondary: #ededf0;
+  --secondary-foreground: #16161a;
+  --muted: #ededf0;
+  --muted-foreground: #6e6e78;
+  --accent: #e8edfd;
+  --accent-foreground: #2448b8;
+  --destructive: #d4373e;
+  --border: #e7e7ea;
+  --input: #e7e7ea;
+  --ring: #2f5ce6;
+  --chart-1: #2f5ce6;
+  --chart-2: #6d4fd4;
+  --chart-3: #1baf7a;
+  --chart-4: #eda100;
+  --chart-5: #b3b2a9;
+  --radius: 1rem;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #16161a;
+  --sidebar-primary: #2f5ce6;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #e8edfd;
+  --sidebar-accent-foreground: #2448b8;
+  --sidebar-border: #e7e7ea;
+  --sidebar-ring: #2f5ce6;
+
+  /* team classification hues */
+  --team-1: #6d4fd4; /* violet */
+  --team-2: #1baf7a; /* teal */
+  --team-3: #eda100; /* amber */
+  --team-4: #e87ba4; /* magenta */
+  --team-5: #eb6834; /* orange */
+  --surface-2: #fafafb;
+}
+
+.dark {
+  --background: #131316;
+  --foreground: #f4f4f6;
+  --card: #1c1c21;
+  --card-foreground: #f4f4f6;
+  --popover: #222228;
+  --popover-foreground: #f4f4f6;
+  --primary: #4a74f0;
+  --primary-foreground: #ffffff;
+  --secondary: #26262c;
+  --secondary-foreground: #f4f4f6;
+  --muted: #26262c;
+  --muted-foreground: #9a9aa4;
+  --accent: #23304f;
+  --accent-foreground: #a8bdf8;
+  --destructive: #e66767;
+  --border: #ffffff14;
+  --input: #ffffff1f;
+  --ring: #4a74f0;
+  --chart-1: #4a74f0;
+  --chart-2: #9085e9;
+  --chart-3: #199e70;
+  --chart-4: #c98500;
+  --chart-5: #5c5b64;
+  --sidebar: #1c1c21;
+  --sidebar-foreground: #f4f4f6;
+  --sidebar-primary: #4a74f0;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #23304f;
+  --sidebar-accent-foreground: #a8bdf8;
+  --sidebar-border: #ffffff14;
+  --sidebar-ring: #4a74f0;
+
+  --team-1: #9085e9;
+  --team-2: #199e70;
+  --team-3: #c98500;
+  --team-4: #d55181;
+  --team-5: #d95926;
+  --surface-2: #232329;
+}
+
+/* soft elevated card — depth by shadow in light, by tone in dark */
+@utility card-soft {
+  border: 1px solid var(--border);
+  box-shadow: 0 10px 40px -12px rgb(22 22 26 / 0.06);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+/* frosted pill for header chips */
+@utility glass-pill {
+  background: color-mix(in srgb, var(--card) 72%, transparent);
+  backdrop-filter: blur(16px) saturate(150%);
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+}
+
+/* horizontal overflow slider — charts & tables keep their desktop form on
+   mobile and slide inside the card; edge fade hints at more content */
+@utility scroll-x {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black 12px,
+    black calc(100% - 12px),
+    transparent 100%
+  );
+}
+.scroll-x::-webkit-scrollbar {
+  display: none;
+}
+
+/* sticky first column inside a scroll-x table so context never scrolls away */
+@utility sticky-first {
+  & th:first-child,
+  & td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background: var(--card);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    overflow-x: clip;
+  }
+}
+
+.dark .card-soft {
+  border-color: transparent;
+  box-shadow: none;
+}
