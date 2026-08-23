@@ -43,18 +43,18 @@ export function FollowupTable({
   viewAllHref,
 }: Props) {
   return (
-    <div className="card-soft bg-card rounded-3xl p-5 sm:p-6">
+    <div className="relative overflow-hidden rounded-3xl border border-zinc-200/90 bg-white/85 p-6 sm:p-7 backdrop-blur-2xl dark:border-white/[0.08] dark:bg-zinc-900/60">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h2 className="text-base font-bold">{title}</h2>
+          <h2 className="text-base font-bold tracking-tight text-zinc-950 dark:text-white">{title}</h2>
           {subtitle && (
-            <p className="text-muted-foreground mt-0.5 text-xs">{subtitle}</p>
+            <p className="text-zinc-500 dark:text-zinc-400 mt-0.5 text-xs">{subtitle}</p>
           )}
         </div>
         {viewAllHref && (
           <Link
             href={viewAllHref}
-            className="text-primary text-xs font-bold whitespace-nowrap hover:underline"
+            className="text-purple-600 dark:text-purple-400 text-xs font-bold whitespace-nowrap hover:underline"
           >
             View all →
           </Link>

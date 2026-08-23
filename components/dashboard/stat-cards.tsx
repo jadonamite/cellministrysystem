@@ -55,7 +55,7 @@ export function StatCards({ stats }: { stats: Stat[] }) {
       variants={staggerContainer}
       initial="hidden"
       animate="show"
-      className="grid grid-cols-2 gap-4 lg:grid-cols-5"
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
     >
       {stats.map((s) => {
         return (
@@ -63,53 +63,57 @@ export function StatCards({ stats }: { stats: Stat[] }) {
             key={s.label}
             variants={fadeInUp}
             className={cn(
-              "card-soft glossy-edge rounded-3xl p-5",
-              s.hero
-                ? "bg-primary text-primary-foreground col-span-2 lg:col-span-1"
-                : "bg-card"
+              "relative overflow-hidden rounded-3xl border p-6 backdrop-blur-2xl transition-all",
+              s.gold
+                ? "border-amber-500/40 bg-amber-500/5 dark:border-amber-500/30 dark:bg-amber-500/10"
+                : "border-zinc-200/90 bg-white/85 dark:border-white/[0.08] dark:bg-zinc-900/60"
             )}
           >
-            <div className="flex items-start justify-between">
+            <div className="flex items-center justify-between mb-4">
+              <span className={cn(
+                "text-xs font-bold uppercase tracking-wider",
+                s.gold ? "text-amber-800 dark:text-amber-400" : "text-zinc-500 dark:text-zinc-400"
+              )}>
+                {s.label}
+              </span>
               <span
                 className={cn(
-                  "flex size-9 items-center justify-center rounded-xl",
-                  s.hero
-                    ? "bg-white/20"
-                    : s.gold
-                      ? "bg-gold-soft text-gold"
-                      : "bg-accent text-accent-foreground"
+                  "p-2.5 rounded-2xl border flex items-center justify-center shrink-0",
+                  s.gold
+                    ? "bg-amber-500/20 text-amber-700 dark:text-amber-300 border-amber-500/30"
+                    : s.hero
+                      ? "bg-purple-500/15 text-purple-600 dark:text-purple-400 border-purple-500/20"
+                      : "bg-zinc-100 text-zinc-700 dark:bg-zinc-800/80 dark:text-zinc-300 border-zinc-200 dark:border-white/5"
                 )}
               >
-                <Icon name={ICONS[s.icon]} className="size-4" />
+                <Icon name={ICONS[s.icon]} className="size-5" />
               </span>
-              {s.spark && <Sparkline data={s.spark} hero={s.hero} />}
             </div>
-            <div
-              className={cn(
-                "mt-4 text-[1.65rem] leading-none font-bold tabular-nums",
-                s.gold && !s.hero && "text-gold"
-              )}
-            >
-              {s.value}
+            
+            <div className="space-y-1">
+              <div
+                className={cn(
+                  "text-3xl font-extrabold tracking-tight tabular-nums",
+                  s.gold ? "text-amber-800 dark:text-amber-300" : "text-zinc-950 dark:text-white"
+                )}
+              >
+                {s.value}
+              </div>
+              <p
+                className={cn(
+                  "text-xs font-semibold flex items-center gap-1",
+                  s.gold
+                    ? "text-amber-800/80 dark:text-amber-400/90"
+                    : s.trend === "up"
+                      ? "text-emerald-600 dark:text-emerald-400"
+                      : s.trend === "down"
+                        ? "text-red-500 dark:text-red-400"
+                        : "text-zinc-500 dark:text-zinc-400"
+                )}
+              >
+                {s.hint}
+              </p>
             </div>
-            <p
-              className={cn(
-                "mt-1.5 text-xs font-medium",
-                s.hero ? "text-white/75" : "text-muted-foreground",
-                !s.hero && s.trend === "down" && "text-destructive",
-                !s.hero && s.trend === "up" && "text-[var(--team-2)]"
-              )}
-            >
-              {s.hint}
-            </p>
-            <p
-              className={cn(
-                "mt-2 text-[10px] font-bold tracking-widest uppercase",
-                s.hero ? "text-white/60" : "text-muted-foreground/70"
-              )}
-            >
-              {s.label}
-            </p>
           </motion.div>
         );
       })}

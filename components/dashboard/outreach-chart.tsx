@@ -15,23 +15,23 @@ import type { DailyPoint, PacePoint } from "@/lib/data";
 
 const activityConfig = {
   called: {
-    label: "Called",
-    theme: { light: "#2f5ce6", dark: "#4a74f0" },
+    label: "Calls",
+    theme: { light: "#7C3AED", dark: "#8B5CF6" },
   },
   messaged: {
-    label: "Messaged",
-    theme: { light: "#93aaf3", dark: "#8fa5f4" },
+    label: "Messages",
+    theme: { light: "#10B981", dark: "#34D399" },
   },
 } satisfies ChartConfig;
 
 const paceConfig = {
   actual: {
     label: "Reached (actual)",
-    theme: { light: "#2f5ce6", dark: "#4a74f0" },
+    theme: { light: "#7C3AED", dark: "#8B5CF6" },
   },
   target: {
     label: "Plan target",
-    theme: { light: "#9a9aa4", dark: "#6e6e78" },
+    theme: { light: "#A1A1AA", dark: "#71717A" },
   },
 } satisfies ChartConfig;
 
@@ -56,13 +56,13 @@ function PeakLabel(props: {
         width={w}
         height={22}
         rx={11}
-        fill="var(--primary)"
+        fill="#7C3AED"
       />
       <text
         x={cx}
         y={cy + 4}
         textAnchor="middle"
-        fill="var(--primary-foreground)"
+        fill="#FFFFFF"
         fontSize={11}
         fontWeight={700}
       >
@@ -90,14 +90,13 @@ export function OutreachChart({ daily, pace, planWeeks }: Props) {
   const source = view === "daily" ? daily : weekly;
   const totals = source.map((d) => d.called + d.messaged);
   const peakIndex = totals.indexOf(Math.max(...totals));
-  // `peak` only exists on the tallest bar, so the callout can't drift
   const barData = source.map((d, i) => ({
     ...d,
     peak: i === peakIndex ? totals[i] : undefined,
   }));
 
   return (
-    <div className="card-soft bg-card rounded-3xl p-6">
+    <div className="relative overflow-hidden rounded-3xl border border-zinc-200/90 bg-white/85 p-6 sm:p-7 backdrop-blur-2xl dark:border-white/[0.08] dark:bg-zinc-900/60">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <h2 className="text-base font-bold">

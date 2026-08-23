@@ -23,14 +23,14 @@ import {
 import { dateOfDayIn } from "@/lib/data";
 import { loadAppData } from "@/lib/page-data";
 
-export const metadata = { title: "Contacts · Outreach Call Center" };
+export const metadata = { title: "Flock Roster · Cell Ministry System" };
 
 const PAGE_SIZE = 60;
 
 const TABS = [
-  { value: "all", label: "All" },
-  { value: "answered", label: "Answered" },
-  { value: "no_answer", label: "No answer" },
+  { value: "all", label: "All Souls" },
+  { value: "answered", label: "Connected" },
+  { value: "no_answer", label: "No Answer" },
   { value: "messaged_only", label: "Messaged" },
   { value: "not_contacted", label: "Pending" },
 ];
@@ -79,18 +79,34 @@ export default async function ContactsPage({
   for (const k of ["status", "team", "q"]) if (sp[k]) params.set(k, sp[k]!);
 
   return (
-    <div className="mx-auto w-full max-w-7xl space-y-5 px-4 py-6 sm:px-6 sm:py-8">
-      <PageHeader
-        title="Contacts"
-        subtitle={`${rows.length.toLocaleString()} of ${scopedContacts.length.toLocaleString()} collated`}
-      >
+    <div className="mx-auto w-full max-w-7xl space-y-6 px-4 py-6 sm:px-6 sm:py-8">
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400">
+            <span>Ministry Directory</span>
+            <span>·</span>
+            <span className="font-serif italic text-purple-600 dark:text-purple-400 text-sm">
+              you are on a course
+            </span>
+          </div>
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-zinc-950 dark:text-white">
+            Flock Roster
+          </h1>
+          <p className="text-zinc-500 dark:text-zinc-400 text-xs">
+            {rows.length.toLocaleString()} of {scopedContacts.length.toLocaleString()} souls collated across ministry units
+          </p>
+        </div>
+
         <Link
           href="/contacts/new"
-          className="bg-primary text-primary-foreground flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-bold"
+          className="group flex items-center justify-between gap-3 rounded-full bg-zinc-950 px-5 py-2.5 text-xs font-bold text-white shadow-sm hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-100 transition-all cursor-pointer"
         >
-          <Icon name="add" className="size-3.5" /> Add contacts
+          <span>Add Soul</span>
+          <span className="flex size-6 items-center justify-center rounded-full bg-white/20 dark:bg-zinc-950/20 text-white dark:text-zinc-950">
+            <Icon name="add" className="size-3.5" />
+          </span>
         </Link>
-      </PageHeader>
+      </div>
 
       <CallerGateProvider callerName={callerName} roster={roster}>
       <div className="bg-background/85 sticky top-0 z-20 -mx-4 space-y-3 px-4 py-3 backdrop-blur sm:-mx-6 sm:px-6">
@@ -135,7 +151,7 @@ export default async function ContactsPage({
       </div>
 
       {/* desktop — admin table */}
-      <div className="card-soft bg-card hidden rounded-3xl p-5 sm:p-6 md:block">
+      <div className="relative overflow-hidden rounded-3xl border border-zinc-200/90 bg-white/85 p-6 sm:p-7 backdrop-blur-2xl dark:border-white/[0.08] dark:bg-zinc-900/60 hidden md:block">
         <div className="scroll-x">
           <div className="min-w-[960px]">
             <Table className="sticky-first">

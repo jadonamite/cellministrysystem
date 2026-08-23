@@ -10,7 +10,7 @@ Companion to [SPEC.md](./SPEC.md). Phases are ordered by dependency — each one
 - [x] Data access layer + connection pooling suited to serverless
 - [x] **Tenant scoping enforced in the data layer** — every query filtered by tenant, not per-call-site
 - [ ] Seed the levels table with the seven-level chain (Zone → Group → Chapter → PCF → Team* → Senior Cell* → Cell)
-- [ ] Environment variables and Vercel project (KayProject account — note the dead `binary` decoy under jadonamites-projects)
+- [ ] Environment variables and Vercel project (jadonamite account — `jadonamites-projects` team, project `cellministrysystem`)
 
 ## Phase 0b — Signup and seeding
 

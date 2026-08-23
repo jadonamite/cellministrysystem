@@ -1,11 +1,11 @@
 import type { IconName } from "@/components/icons";
 
 export const NAV_ITEMS: { href: string; label: string; icon: IconName }[] = [
-  { href: "/", label: "Dashboard", icon: "dashboard" },
-  { href: "/teams", label: "Teams", icon: "teams" },
+  { href: "/", label: "Overview", icon: "dashboard" },
+  { href: "/contacts", label: "Flock Roster", icon: "contacts" },
+  { href: "/teams", label: "Hierarchy Tree", icon: "teams" },
   { href: "/follow-ups", label: "Follow-ups", icon: "followups" },
-  { href: "/contacts", label: "Contacts", icon: "contacts" },
-  { href: "/events", label: "Events", icon: "events" },
+  { href: "/events", label: "Campaigns", icon: "events" },
 ];
 
 export function isActive(pathname: string, href: string) {

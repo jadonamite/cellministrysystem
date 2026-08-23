@@ -40,10 +40,12 @@ export function TeamDonut({ teams, outcomes, large = false }: Props) {
   const reachedTotal = outcomes.reduce((n, o) => n + o.count, 0);
 
   return (
-    <div className="card-soft bg-card flex h-full min-w-0 flex-col rounded-3xl p-5 sm:p-6">
-      <h2 className={cn("font-bold", large ? "text-xl" : "text-base")}>Collation by team</h2>
-      <p className={cn("text-muted-foreground mt-0.5", large ? "text-sm" : "text-xs")}>
-        Every contact credited to the team that brought it
+    <div className="relative overflow-hidden rounded-3xl border border-zinc-200/90 bg-white/85 p-6 sm:p-7 backdrop-blur-2xl dark:border-white/[0.08] dark:bg-zinc-900/60 flex h-full min-w-0 flex-col">
+      <h2 className={cn("font-bold tracking-tight text-zinc-950 dark:text-white", large ? "text-xl" : "text-base")}>
+        Collation by Ministry Team
+      </h2>
+      <p className={cn("text-zinc-500 dark:text-zinc-400 mt-0.5", large ? "text-sm" : "text-xs")}>
+        Every soul credited to the cell & team that brought it
       </p>
 
       <div className="mt-2 flex min-w-0 flex-wrap items-center justify-center gap-4 sm:gap-5">
