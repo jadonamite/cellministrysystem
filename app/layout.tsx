@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { Bricolage_Grotesque, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { Plus_Jakarta_Sans, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { Sidebar } from "@/components/shell/sidebar";
 import { SidebarProgress, SidebarProgressSkeleton } from "@/components/shell/sidebar-progress";
@@ -9,9 +9,10 @@ import { getSession } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import "./globals.css";
 
-const bricolage = Bricolage_Grotesque({
+const googleSans = Plus_Jakarta_Sans({
   variable: "--font-sans",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 const geistMono = Geist_Mono({
@@ -43,7 +44,7 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      className={`${bricolage.variable} ${geistMono.variable} ${instrumentSerif.variable} h-full`}
+      className={`${googleSans.variable} ${geistMono.variable} ${instrumentSerif.variable} h-full`}
       suppressHydrationWarning
     >
       <body className="flex min-h-full flex-col">

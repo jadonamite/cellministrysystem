@@ -2,8 +2,7 @@
 
 import { useActionState, useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Icon } from "@/components/icons";
-import { ArrowRight, Loader2, Lock, ShieldCheck, UserCheck } from "lucide-react";
+import { Icon, Spinner } from "@/components/icons";
 import { adminLogin, callerLogin, type LoginResult } from "./actions";
 
 type RosterCaller = { id: string; name: string };
@@ -17,32 +16,35 @@ export function LoginForm({ roster }: { roster: RosterCaller[] }) {
   const [pin, setPin] = useState("");
 
   return (
-    <div className="w-full max-w-md rounded-3xl border border-border/60 bg-card/80 p-6 sm:p-8 shadow-2xl backdrop-blur-2xl transition-all">
-      <div className="mb-6 text-center">
-        <h2 className="text-xl font-bold tracking-tight text-foreground">
+    <div className="relative w-full max-w-[420px] overflow-hidden rounded-3xl border border-white/[0.12] bg-zinc-900/75 p-7 sm:p-9 shadow-2xl backdrop-blur-2xl transition-all">
+      {/* Top subtle gloss rim */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
+
+      <div className="mb-7 text-center">
+        <h2 className="text-2xl font-bold tracking-tight text-white">
           Leadership Access
         </h2>
-        <p className="text-muted-foreground mt-1 text-xs">
+        <p className="text-zinc-400 mt-1.5 text-xs font-normal">
           Sign in to monitor flock health, roster, and promotions
         </p>
       </div>
 
       <Tabs defaultValue="caller" className="w-full space-y-6">
-        {/* Rich Premium Shadcn Segmented Slider */}
-        <TabsList className="grid h-14 w-full grid-cols-2 rounded-2xl border border-border/50 bg-secondary/80 p-1.5 shadow-inner">
+        {/* Rich Elevated Segment Slider */}
+        <TabsList className="grid h-13 w-full grid-cols-2 rounded-2xl border border-white/[0.08] bg-zinc-950/70 p-1">
           <TabsTrigger
             value="caller"
-            className="flex h-11 items-center justify-center gap-2 rounded-xl text-xs font-semibold tracking-wide transition-all duration-300 data-active:border data-active:border-border/60 data-active:bg-background data-active:text-foreground data-active:shadow-md"
+            className="flex h-11 items-center justify-center gap-2 rounded-xl text-xs font-semibold tracking-wide text-zinc-400 transition-all duration-300 data-active:border data-active:border-white/15 data-active:bg-zinc-800/90 data-active:text-white data-active:shadow-lg"
           >
-            <UserCheck className="size-4 text-primary" />
+            <Icon name="user-circle" className="size-4 text-purple-400 shrink-0" />
             <span>Cell Leader</span>
           </TabsTrigger>
           <TabsTrigger
             value="admin"
-            className="flex h-11 items-center justify-center gap-2 rounded-xl text-xs font-semibold tracking-wide transition-all duration-300 data-active:border data-active:border-border/60 data-active:bg-background data-active:text-foreground data-active:shadow-md"
+            className="flex h-11 items-center justify-center gap-2 rounded-xl text-xs font-semibold tracking-wide text-zinc-400 transition-all duration-300 data-active:border data-active:border-white/15 data-active:bg-zinc-800/90 data-active:text-white data-active:shadow-lg"
           >
-            <ShieldCheck className="size-4 text-primary" />
-            <span>Admin / Senior</span>
+            <Icon name="shield-check" className="size-4 text-purple-400 shrink-0" />
+            <span>Admin</span>
           </TabsTrigger>
         </TabsList>
 
@@ -53,7 +55,7 @@ export function LoginForm({ roster }: { roster: RosterCaller[] }) {
             <input type="hidden" name="pin" value={pin} />
 
             <div className="space-y-2">
-              <label className="text-muted-foreground block text-[11px] font-semibold uppercase tracking-wider">
+              <label className="text-zinc-400 block text-[11px] font-semibold uppercase tracking-wider">
                 Select Your Name
               </label>
               <div className="flex max-h-32 flex-wrap gap-1.5 overflow-y-auto py-1">
@@ -64,8 +66,8 @@ export function LoginForm({ roster }: { roster: RosterCaller[] }) {
                     onClick={() => setCallerId(c.id)}
                     className={`rounded-full px-3.5 py-1.5 text-xs font-medium transition-all duration-200 cursor-pointer ${
                       callerId === c.id
-                        ? "bg-primary text-primary-foreground shadow-sm ring-2 ring-primary/30 font-semibold"
-                        : "bg-secondary text-secondary-foreground hover:bg-secondary/70 border border-border/40"
+                        ? "bg-purple-600 text-white shadow-md shadow-purple-600/30 ring-1 ring-white/20 font-semibold"
+                        : "bg-zinc-800/60 text-zinc-300 hover:bg-zinc-800 hover:text-white border border-white/5"
                     }`}
                   >
                     {c.name}
@@ -75,7 +77,7 @@ export function LoginForm({ roster }: { roster: RosterCaller[] }) {
             </div>
 
             <div className="space-y-2">
-              <label className="text-muted-foreground block text-[11px] font-semibold uppercase tracking-wider">
+              <label className="text-zinc-400 block text-[11px] font-semibold uppercase tracking-wider">
                 4-Digit Leader PIN
               </label>
               <input
@@ -85,37 +87,32 @@ export function LoginForm({ roster }: { roster: RosterCaller[] }) {
                 value={pin}
                 onChange={(e) => setPin(e.target.value.replace(/\D/g, "").slice(0, 4))}
                 placeholder="• • • •"
-                className="bg-secondary/60 text-foreground placeholder:text-muted-foreground/40 focus:border-primary focus:ring-primary/20 h-13 w-full rounded-2xl border border-border/50 text-center text-xl font-bold tracking-[0.6em] outline-none transition-all focus:ring-4"
+                className="h-14 w-full rounded-2xl border border-white/10 bg-zinc-950/60 text-center text-xl font-bold tracking-[0.6em] text-white placeholder:text-zinc-600 outline-none transition-all focus:border-purple-500 focus:bg-zinc-950 focus:ring-4 focus:ring-purple-500/20"
               />
             </div>
 
             {callerState.error && (
-              <p className="text-destructive flex items-center gap-1.5 text-xs font-semibold animate-shake">
+              <p className="text-red-400 flex items-center gap-1.5 text-xs font-semibold">
                 <Icon name="error" className="size-4 shrink-0" /> {callerState.error}
               </p>
             )}
 
-            {/* Signature Lading-style Sliding Arrow Action Button */}
+            {/* Classic High-Contrast Pill Action Button */}
             <button
               type="submit"
               disabled={!callerId || pin.length !== 4 || callerPending}
-              className="group relative flex h-13 w-full items-center justify-center overflow-hidden rounded-full bg-primary text-primary-foreground text-sm font-semibold shadow-lg shadow-primary/25 transition-all duration-500 hover:shadow-xl hover:shadow-primary/35 hover:brightness-105 disabled:pointer-events-none disabled:opacity-40 cursor-pointer"
+              className="group relative flex h-14 w-full items-center justify-between overflow-hidden rounded-full bg-white px-6 font-semibold text-zinc-950 shadow-lg shadow-white/5 transition-all duration-300 hover:bg-zinc-100 hover:shadow-xl hover:shadow-purple-500/10 active:scale-[0.99] disabled:pointer-events-none disabled:opacity-40 cursor-pointer"
             >
-              <span className="relative z-10 flex items-center gap-2 transition-all duration-500 group-hover:-translate-x-2.5">
+              <span className="text-sm font-semibold tracking-tight">
+                {callerPending ? "Signing in…" : "Sign in as Leader"}
+              </span>
+              <span className="flex size-10 items-center justify-center rounded-full bg-zinc-950 text-white transition-transform duration-300 group-hover:translate-x-1">
                 {callerPending ? (
-                  <>
-                    <Loader2 className="size-4 animate-spin" />
-                    <span>Signing in…</span>
-                  </>
+                  <Spinner className="size-4 text-white" />
                 ) : (
-                  <span>Sign in as Leader</span>
+                  <Icon name="arrow-right" className="size-4 text-white" />
                 )}
               </span>
-              {!callerPending && (
-                <span className="bg-primary-foreground text-primary absolute right-1.5 flex size-10 items-center justify-center rounded-full transition-all duration-500 group-hover:right-[calc(100%-46px)] group-hover:rotate-45 group-hover:bg-primary group-hover:text-primary-foreground group-hover:shadow-md">
-                  <ArrowRight className="size-4" />
-                </span>
-              )}
             </button>
           </form>
         </TabsContent>
@@ -124,48 +121,42 @@ export function LoginForm({ roster }: { roster: RosterCaller[] }) {
         <TabsContent value="admin" className="mt-0 focus-visible:outline-none">
           <form action={adminAction} className="space-y-5">
             <div className="space-y-2">
-              <label className="text-muted-foreground block text-[11px] font-semibold uppercase tracking-wider">
-                Admin / Senior Credential
+              <label className="text-zinc-400 block text-[11px] font-semibold uppercase tracking-wider">
+                Admin Credential
               </label>
               <div className="relative">
                 <input
                   name="code"
                   type="password"
                   autoComplete="off"
-                  placeholder="Enter access code or password"
-                  className="bg-secondary/60 text-foreground placeholder:text-muted-foreground/50 focus:border-primary focus:ring-primary/20 h-13 w-full rounded-2xl border border-border/50 px-4 pl-11 text-sm font-medium outline-none transition-all focus:ring-4"
+                  placeholder="Enter access code"
+                  className="h-14 w-full rounded-2xl border border-white/10 bg-zinc-950/60 px-5 text-sm font-medium text-white placeholder:text-zinc-600 outline-none transition-all focus:border-purple-500 focus:bg-zinc-950 focus:ring-4 focus:ring-purple-500/20"
                 />
-                <Lock className="text-muted-foreground absolute left-4 top-1/2 -translate-y-1/2 size-4" />
               </div>
             </div>
 
             {adminState.error && (
-              <p className="text-destructive flex items-center gap-1.5 text-xs font-semibold animate-shake">
+              <p className="text-red-400 flex items-center gap-1.5 text-xs font-semibold">
                 <Icon name="error" className="size-4 shrink-0" /> {adminState.error}
               </p>
             )}
 
-            {/* Signature Lading-style Action Button */}
+            {/* Classic High-Contrast Pill Action Button */}
             <button
               type="submit"
               disabled={adminPending}
-              className="group relative flex h-13 w-full items-center justify-center overflow-hidden rounded-full bg-primary text-primary-foreground text-sm font-semibold shadow-lg shadow-primary/25 transition-all duration-500 hover:shadow-xl hover:shadow-primary/35 hover:brightness-105 disabled:pointer-events-none disabled:opacity-40 cursor-pointer"
+              className="group relative flex h-14 w-full items-center justify-between overflow-hidden rounded-full bg-white px-6 font-semibold text-zinc-950 shadow-lg shadow-white/5 transition-all duration-300 hover:bg-zinc-100 hover:shadow-xl hover:shadow-purple-500/10 active:scale-[0.99] disabled:pointer-events-none disabled:opacity-40 cursor-pointer"
             >
-              <span className="relative z-10 flex items-center gap-2 transition-all duration-500 group-hover:-translate-x-2.5">
+              <span className="text-sm font-semibold tracking-tight">
+                {adminPending ? "Signing in…" : "Sign in as Admin"}
+              </span>
+              <span className="flex size-10 items-center justify-center rounded-full bg-zinc-950 text-white transition-transform duration-300 group-hover:translate-x-1">
                 {adminPending ? (
-                  <>
-                    <Loader2 className="size-4 animate-spin" />
-                    <span>Signing in…</span>
-                  </>
+                  <Spinner className="size-4 text-white" />
                 ) : (
-                  <span>Sign in as Admin</span>
+                  <Icon name="arrow-right" className="size-4 text-white" />
                 )}
               </span>
-              {!adminPending && (
-                <span className="bg-primary-foreground text-primary absolute right-1.5 flex size-10 items-center justify-center rounded-full transition-all duration-500 group-hover:right-[calc(100%-46px)] group-hover:rotate-45 group-hover:bg-primary group-hover:text-primary-foreground group-hover:shadow-md">
-                  <ArrowRight className="size-4" />
-                </span>
-              )}
             </button>
           </form>
         </TabsContent>

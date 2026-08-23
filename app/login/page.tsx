@@ -14,13 +14,19 @@ export default async function LoginPage() {
   const roster = await callerRoster();
 
   return (
-    <div className="flex min-h-screen w-full flex-col items-center justify-center px-6 py-12">
-      <div className="relative z-10 flex w-full flex-col items-center gap-8">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold tracking-[0.16em] uppercase text-foreground">
+    <div className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-background px-6 py-12">
+      {/* Soft discrete ambient bloom behind the card */}
+      <div
+        className="pointer-events-none absolute -top-24 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-purple-600/10 blur-3xl"
+        aria-hidden
+      />
+
+      <div className="relative z-10 flex w-full flex-col items-center gap-9">
+        <div className="text-center space-y-1">
+          <h1 className="text-sm font-semibold uppercase tracking-[0.25em] text-zinc-400">
             Cell Ministry
           </h1>
-          <p className="font-serif italic text-primary mt-1 text-3xl sm:text-4xl">
+          <p className="font-serif italic text-purple-300 text-4xl sm:text-5xl tracking-tight">
             you are on a course
           </p>
         </div>
