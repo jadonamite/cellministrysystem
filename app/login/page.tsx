@@ -15,15 +15,23 @@ export default async function LoginPage() {
 
   return (
     <div className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-background px-6 py-12">
-      {/* Soft discrete ambient bloom behind the card */}
+      {/* Multi-chroma ambient frosted glow orbs that bleed through the glass */}
       <div
-        className="pointer-events-none absolute -top-24 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-purple-600/10 blur-3xl"
+        className="pointer-events-none absolute -top-16 left-1/4 h-[420px] w-[420px] rounded-full bg-purple-600/20 blur-[110px] dark:bg-purple-600/15"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute top-1/3 right-1/4 h-[380px] w-[380px] rounded-full bg-indigo-500/18 blur-[120px] dark:bg-indigo-500/12"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute -bottom-16 left-1/3 h-[360px] w-[360px] rounded-full bg-fuchsia-500/15 blur-[100px] dark:bg-fuchsia-500/10"
         aria-hidden
       />
 
       <div className="relative z-10 flex w-full flex-col items-center gap-9">
         <div className="text-center space-y-1">
-          <h1 className="text-sm font-semibold uppercase tracking-[0.25em] text-zinc-500 dark:text-zinc-400">
+          <h1 className="text-xs font-semibold uppercase tracking-[0.25em] text-zinc-500 dark:text-zinc-400">
             Cell Ministry
           </h1>
           <p className="font-serif italic text-purple-600 dark:text-purple-300 text-4xl sm:text-5xl tracking-tight">
