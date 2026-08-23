@@ -108,38 +108,68 @@ function OtpPinInput({
 export function LoginForm({ roster }: { roster: RosterCaller[] }) {
   const [adminState, adminAction, adminPending] = useActionState(adminLogin, initial);
   const [callerState, callerAction, callerPending] = useActionState(callerLogin, initial);
+  const [activeTab, setActiveTab] = useState<"caller" | "admin">("caller");
   const [callerId, setCallerId] = useState("");
   const [pin, setPin] = useState("");
 
   return (
-    <div className="relative w-full max-w-[430px] overflow-hidden rounded-3xl border border-white/80 bg-white/70 p-8 sm:p-10 shadow-[0_30px_70px_-15px_rgba(0,0,0,0.1),0_1px_3px_rgba(0,0,0,0.05)] backdrop-blur-3xl transition-all dark:border-white/[0.14] dark:bg-zinc-900/60 dark:shadow-[0_40px_90px_-20px_rgba(0,0,0,0.8)]">
+    <div className="relative w-full max-w-[430px] overflow-hidden rounded-3xl border border-zinc-200/90 bg-white/80 p-8 sm:p-10 backdrop-blur-3xl transition-all duration-300 dark:border-white/[0.14] dark:bg-zinc-900/60 dark:shadow-[0_40px_90px_-20px_rgba(0,0,0,0.8)]">
       {/* Top specular gloss rim */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/80 to-transparent dark:via-white/25" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-zinc-300 to-transparent dark:via-white/25" />
+
+      {/* Hero Morphing Dynamic Emblem */}
+      <div className="mb-6 flex flex-col items-center">
+        {activeTab === "caller" ? (
+          <div className="relative size-16 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center shadow-[0_0_30px_rgba(168,85,247,0.25)] transition-all duration-500 animate-pulse">
+            {/* Radiant Discipleship Cluster (Leader) */}
+            <svg className="size-8 text-purple-600 dark:text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="8.5" stroke-dasharray="3 3" strokeOpacity="0.5" />
+              <circle cx="12" cy="5" r="2" fill="currentColor" />
+              <circle cx="5.5" cy="15" r="2" fill="currentColor" />
+              <circle cx="18.5" cy="15" r="2" fill="currentColor" />
+              <circle cx="12" cy="12" r="2.5" fill="#10B981" />
+            </svg>
+          </div>
+        ) : (
+          <div className="relative size-16 rounded-2xl bg-zinc-900 border border-amber-500/30 flex items-center justify-center shadow-[0_0_30px_rgba(245,158,11,0.2)] transition-all duration-500">
+            {/* Master Key & Vault Keystone Emblem (Admin) */}
+            <svg className="size-8 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z" />
+            </svg>
+          </div>
+        )}
+      </div>
 
       <div className="mb-7 text-center">
         <h2 className="text-2xl font-bold tracking-tight text-zinc-950 dark:text-white">
           Leadership Access
         </h2>
         <p className="text-zinc-500 dark:text-zinc-400 mt-1.5 text-xs font-normal">
-          Sign in to monitor flock health, roster, and promotions
+          {activeTab === "caller"
+            ? "Sign in to monitor flock health, roster, and promotions"
+            : "Sign in with root authority to govern system data"}
         </p>
       </div>
 
-      <Tabs defaultValue="caller" className="w-full space-y-6">
-        {/* Executive Switcher with micro status indicators */}
-        <TabsList className="grid h-11 w-full grid-cols-2 rounded-xl border border-zinc-200/80 bg-zinc-100/90 p-1 dark:border-white/10 dark:bg-zinc-950/80">
+      <Tabs
+        value={activeTab}
+        onValueChange={(val) => setActiveTab(val as "caller" | "admin")}
+        className="w-full space-y-6"
+      >
+        {/* Typographic Switcher with Micro Marks */}
+        <TabsList className="grid h-12 w-full grid-cols-2 rounded-2xl border border-zinc-200/80 bg-zinc-100/90 p-1.5 dark:border-white/10 dark:bg-zinc-950/80">
           <TabsTrigger
             value="caller"
-            className="flex h-full items-center justify-center gap-2 rounded-lg text-xs font-semibold tracking-tight text-zinc-500 transition-all duration-200 data-[state=active]:border data-[state=active]:border-zinc-200/60 data-[state=active]:bg-white data-[state=active]:text-zinc-950 data-[state=active]:shadow-sm dark:text-zinc-400 dark:data-[state=active]:border-white/10 dark:data-[state=active]:bg-zinc-800 dark:data-[state=active]:text-white dark:data-[state=active]:shadow-sm cursor-pointer"
+            className="flex h-full items-center justify-center gap-2 rounded-xl text-xs font-semibold tracking-tight text-zinc-500 transition-all duration-200 data-[state=active]:border data-[state=active]:border-zinc-200/80 data-[state=active]:bg-white data-[state=active]:text-zinc-950 data-[state=active]:shadow-sm dark:text-zinc-400 dark:data-[state=active]:border-white/10 dark:data-[state=active]:bg-zinc-800 dark:data-[state=active]:text-white dark:data-[state=active]:shadow-md cursor-pointer"
           >
             <span className="size-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10B981] animate-pulse shrink-0" />
             <span>Cell Leader</span>
           </TabsTrigger>
           <TabsTrigger
             value="admin"
-            className="flex h-full items-center justify-center gap-2 rounded-lg text-xs font-semibold tracking-tight text-zinc-500 transition-all duration-200 data-[state=active]:border data-[state=active]:border-zinc-200/60 data-[state=active]:bg-white data-[state=active]:text-zinc-950 data-[state=active]:shadow-sm dark:text-zinc-400 dark:data-[state=active]:border-white/10 dark:data-[state=active]:bg-zinc-800 dark:data-[state=active]:text-white dark:data-[state=active]:shadow-sm cursor-pointer"
+            className="flex h-full items-center justify-center gap-2 rounded-xl text-xs font-semibold tracking-tight text-zinc-500 transition-all duration-200 data-[state=active]:border data-[state=active]:border-zinc-200/80 data-[state=active]:bg-white data-[state=active]:text-zinc-950 data-[state=active]:shadow-sm dark:text-zinc-400 dark:data-[state=active]:border-white/10 dark:data-[state=active]:bg-zinc-800 dark:data-[state=active]:text-white dark:data-[state=active]:shadow-md cursor-pointer"
           >
-            <span className="size-2 rounded-full bg-purple-500 shadow-[0_0_8px_#8B5CF6] shrink-0" />
+            <span className="size-2 rounded-full bg-amber-400 shadow-[0_0_8px_#f59e0b] shrink-0" />
             <span>Admin</span>
           </TabsTrigger>
         </TabsList>
@@ -163,7 +193,7 @@ export function LoginForm({ roster }: { roster: RosterCaller[] }) {
                     className={`rounded-full px-3.5 py-1.5 text-xs font-medium transition-all duration-200 cursor-pointer ${
                       callerId === c.id
                         ? "bg-zinc-950 text-white shadow-sm font-semibold dark:bg-purple-600 dark:text-white"
-                        : "bg-white/80 text-zinc-700 hover:bg-zinc-100 border border-zinc-200/80 dark:bg-zinc-800/60 dark:text-zinc-300 dark:border-white/10 dark:hover:bg-zinc-800 dark:hover:text-white"
+                        : "bg-white text-zinc-700 hover:bg-zinc-50 border border-zinc-200/90 dark:bg-zinc-800/60 dark:text-zinc-300 dark:border-white/10 dark:hover:bg-zinc-800 dark:hover:text-white"
                     }`}
                   >
                     {c.name}
@@ -189,14 +219,14 @@ export function LoginForm({ roster }: { roster: RosterCaller[] }) {
             <button
               type="submit"
               disabled={!callerId || pin.length !== 4 || callerPending}
-              className="group relative flex h-13 w-full items-center justify-between overflow-hidden rounded-full bg-zinc-900 px-5 font-semibold text-white shadow-md shadow-zinc-900/10 transition-all duration-200 hover:bg-zinc-800 active:scale-[0.99] disabled:opacity-40 disabled:pointer-events-none cursor-pointer dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100"
+              className="group relative flex h-13 w-full items-center justify-between overflow-hidden rounded-full bg-zinc-950 px-5 font-semibold text-white transition-all duration-200 hover:bg-zinc-800 active:scale-[0.99] disabled:opacity-40 disabled:pointer-events-none cursor-pointer dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100"
             >
               <span className="text-sm font-semibold tracking-tight">
                 {callerPending ? "Signing in…" : "Sign in as Leader"}
               </span>
-              <span className="flex size-9 items-center justify-center rounded-full bg-white text-zinc-900 transition-transform duration-200 group-hover:translate-x-1 dark:bg-zinc-900 dark:text-white">
+              <span className="flex size-9 items-center justify-center rounded-full bg-white text-zinc-950 transition-transform duration-200 group-hover:translate-x-1 dark:bg-zinc-950 dark:text-white">
                 {callerPending ? (
-                  <Spinner className="size-4 text-zinc-900 dark:text-white" />
+                  <Spinner className="size-4 text-zinc-950 dark:text-white" />
                 ) : (
                   <Icon name="arrow-right" className="size-4" />
                 )}
@@ -218,7 +248,7 @@ export function LoginForm({ roster }: { roster: RosterCaller[] }) {
                   type="password"
                   autoComplete="off"
                   placeholder="Enter access code"
-                  className="h-13 w-full rounded-xl border border-zinc-200/90 bg-white/70 px-4 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 outline-none transition-all focus:border-zinc-900 focus:bg-white focus:ring-2 focus:ring-zinc-900/10 dark:border-white/10 dark:bg-zinc-950/60 dark:text-white dark:placeholder:text-zinc-600 dark:focus:border-purple-500 dark:focus:bg-zinc-950 dark:focus:ring-purple-500/20"
+                  className="h-13 w-full rounded-xl border border-zinc-200/90 bg-white px-4 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 outline-none transition-all focus:border-zinc-900 focus:ring-2 focus:ring-zinc-900/10 dark:border-white/10 dark:bg-zinc-950/60 dark:text-white dark:placeholder:text-zinc-600 dark:focus:border-purple-500 dark:focus:bg-zinc-950 dark:focus:ring-purple-500/20"
                 />
               </div>
             </div>
@@ -233,14 +263,14 @@ export function LoginForm({ roster }: { roster: RosterCaller[] }) {
             <button
               type="submit"
               disabled={adminPending}
-              className="group relative flex h-13 w-full items-center justify-between overflow-hidden rounded-full bg-zinc-900 px-5 font-semibold text-white shadow-md shadow-zinc-900/10 transition-all duration-200 hover:bg-zinc-800 active:scale-[0.99] disabled:opacity-40 disabled:pointer-events-none cursor-pointer dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100"
+              className="group relative flex h-13 w-full items-center justify-between overflow-hidden rounded-full bg-zinc-950 px-5 font-semibold text-white transition-all duration-200 hover:bg-zinc-800 active:scale-[0.99] disabled:opacity-40 disabled:pointer-events-none cursor-pointer dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100"
             >
               <span className="text-sm font-semibold tracking-tight">
                 {adminPending ? "Signing in…" : "Sign in as Admin"}
               </span>
-              <span className="flex size-9 items-center justify-center rounded-full bg-white text-zinc-900 transition-transform duration-200 group-hover:translate-x-1 dark:bg-zinc-900 dark:text-white">
+              <span className="flex size-9 items-center justify-center rounded-full bg-white text-zinc-950 transition-transform duration-200 group-hover:translate-x-1 dark:bg-zinc-950 dark:text-white">
                 {adminPending ? (
-                  <Spinner className="size-4 text-zinc-900 dark:text-white" />
+                  <Spinner className="size-4 text-zinc-950 dark:text-white" />
                 ) : (
                   <Icon name="arrow-right" className="size-4" />
                 )}
