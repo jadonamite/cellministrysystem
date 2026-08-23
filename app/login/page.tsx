@@ -23,10 +23,10 @@ export default async function LoginPage() {
 
       <div className="relative z-10 flex w-full flex-col items-center gap-9">
         <div className="text-center space-y-1">
-          <h1 className="text-sm font-semibold uppercase tracking-[0.25em] text-zinc-400">
+          <h1 className="text-sm font-semibold uppercase tracking-[0.25em] text-zinc-500 dark:text-zinc-400">
             Cell Ministry
           </h1>
-          <p className="font-serif italic text-purple-300 text-4xl sm:text-5xl tracking-tight">
+          <p className="font-serif italic text-purple-600 dark:text-purple-300 text-4xl sm:text-5xl tracking-tight">
             you are on a course
           </p>
         </div>

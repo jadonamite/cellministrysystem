@@ -62,62 +62,62 @@
  * cell inheriting its team's hue so colour encodes the hierarchy itself.
  */
 :root {
-  --background: #FBFAFE;
-  --foreground: #1A1526;
-  --card: #ffffff;
-  --card-foreground: #1A1526;
-  --popover: #ffffff;
-  --popover-foreground: #1A1526;
-  --primary: #7C4DDB;
-  --primary-foreground: #ffffff;
-  --secondary: #F1EEF8;
-  --secondary-foreground: #1A1526;
-  --muted: #F1EEF8;
-  --muted-foreground: #6B6180;
-  --accent: #F1EBFE;
-  --accent-foreground: #5B32B0;
-  --destructive: #D4373E;
-  --border: #E9E4F5;
-  --input: #E9E4F5;
-  --ring: #7C4DDB;
-  --chart-1: #7C4DDB;
-  --chart-2: #0E9B84;
-  --chart-3: #C98A18;
-  --chart-4: #D4568A;
-  --chart-5: #3B6FD4;
+  --background: #FAFAFA;
+  --foreground: #09090B;
+  --card: #FFFFFF;
+  --card-foreground: #09090B;
+  --popover: #FFFFFF;
+  --popover-foreground: #09090B;
+  --primary: #7C3AED;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F4F4F5;
+  --secondary-foreground: #18181B;
+  --muted: #F4F4F5;
+  --muted-foreground: #71717A;
+  --accent: #F4F4F5;
+  --accent-foreground: #18181B;
+  --destructive: #EF4444;
+  --border: #E4E4E7;
+  --input: #E4E4E7;
+  --ring: #7C3AED;
+  --chart-1: #7C3AED;
+  --chart-2: #10B981;
+  --chart-3: #F59E0B;
+  --chart-4: #EC4899;
+  --chart-5: #3B82F6;
   --radius: 1rem;
-  --sidebar: #ffffff;
-  --sidebar-foreground: #1A1526;
-  --sidebar-primary: #7C4DDB;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #F1EBFE;
-  --sidebar-accent-foreground: #5B32B0;
-  --sidebar-border: #E9E4F5;
-  --sidebar-ring: #7C4DDB;
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #09090B;
+  --sidebar-primary: #7C3AED;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #F4F4F5;
+  --sidebar-accent-foreground: #18181B;
+  --sidebar-border: #E4E4E7;
+  --sidebar-ring: #7C3AED;
 
   /* the one highlight — reserved for the figure that needs action */
-  --gold: #B57F14;
-  --gold-soft: #FBF1DC;
+  --gold: #D97706;
+  --gold-soft: #FEF3C7;
 
   /* team hues; cells inherit their team's hue (see --cell-tint) */
-  --team-1: #6D4FD4; /* violet */
-  --team-2: #0E9B84; /* teal   */
-  --team-3: #C98A18; /* amber  */
-  --team-4: #D4568A; /* rose   */
-  --team-5: #3B6FD4; /* blue   */
-  --cell-tint: 88%;  /* how far a cell chip washes toward the surface */
+  --team-1: #7C3AED; /* violet */
+  --team-2: #10B981; /* emerald */
+  --team-3: #F59E0B; /* amber  */
+  --team-4: #EC4899; /* rose   */
+  --team-5: #3B82F6; /* blue   */
+  --cell-tint: 88%;
 
-  --surface-2: #F7F5FC;
+  --surface-2: #F4F4F5;
   --gloss-top: rgba(255, 255, 255, 0.9);
-  --gloss-edge: rgba(124, 77, 219, 0.28);
-  --lift: 0 12px 34px -14px rgba(60, 30, 110, 0.24);
+  --gloss-edge: rgba(124, 58, 237, 0.15);
+  --lift: 0 12px 34px -14px rgba(0, 0, 0, 0.08);
 
-  /* irradiance — discrete light sources, tuned for a white ground */
-  --irr-1: rgba(183, 148, 246, 0.30);
-  --irr-2: rgba(255, 184, 107, 0.22);
-  --irr-3: rgba(127, 227, 232, 0.22);
-  --irr-4: rgba(255, 158, 205, 0.20);
-  --irr-veil: rgba(251, 250, 254, 0.55);
+  /* subtle ambient irradiance */
+  --irr-1: rgba(124, 58, 237, 0.08);
+  --irr-2: rgba(245, 158, 11, 0.06);
+  --irr-3: rgba(56, 189, 248, 0.06);
+  --irr-4: rgba(236, 72, 153, 0.06);
+  --irr-veil: rgba(250, 250, 250, 0.7);
 }
 
 .dark {
