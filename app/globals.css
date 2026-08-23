@@ -10,7 +10,8 @@
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-sans);
-  --font-script: var(--font-script);
+  --font-serif: var(--font-serif);
+  --font-script: var(--font-serif);
   --color-gold: var(--gold);
   --color-gold-soft: var(--gold-soft);
   --color-sidebar-ring: var(--sidebar-ring);
