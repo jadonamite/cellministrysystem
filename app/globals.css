@@ -62,7 +62,7 @@
  * cell inheriting its team's hue so colour encodes the hierarchy itself.
  */
 :root {
-  --background: #FAFAFA;
+  --background: #F4F4F6;
   --foreground: #09090B;
   --card: #FFFFFF;
   --card-foreground: #09090B;
