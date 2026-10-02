@@ -3,7 +3,8 @@ import type { NextRequest } from "next/server";
 import { SESSION_COOKIE, verifySessionToken } from "@/lib/auth";
 
 /**
- * Front-door auth gate. The landing and legal pages are public.
+ * Front-door auth gate. The landing and legal pages, and the landing gallery's
+ * photos (/gallery-photo/...), are public.
  *
  * No valid session → bounce to /login. A caller session is scoped to /contacts
  * (and its sub-routes); anything else redirects them back there. An admin
@@ -14,7 +15,7 @@ const PUBLIC_PATHS = new Set(["/", "/terms", "/privacy", "/cookies"]);
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  if (PUBLIC_PATHS.has(pathname)) return NextResponse.next();
+  if (PUBLIC_PATHS.has(pathname) || pathname.startsWith("/gallery-photo/")) return NextResponse.next();
 
   const token = request.cookies.get(SESSION_COOKIE)?.value;
   const session = await verifySessionToken(token);

@@ -12,47 +12,47 @@ zone's own material: its flyers and the photographers' service photos.
 ## The idea
 
 The auditorium is lit blue and the zone's flyers are royal blue and gold, so the palette is
-taken from the room itself: midnight, stage blue, gold and the cream of the flyer paper. The
-public page is built from real service photographs and moves in depth, as if you were
-standing in the crowd.
+taken from the room itself: midnight, stage blue, gold and the cream of the flyer paper.
+
+The page is clean and light. The ministry's own artwork is shown as artwork, whole and
+uncropped; candid photos are shown large. Motion is reserved for scroll-driven depth and the
+two horizontal runs; nothing is cut out, masked or layered over a photo.
 
 Gold is rare: it marks the most important thing in a view.
 
 ## The landing page
 
 The public site is branded BLWZONEG (BLW badge + "BLWZONEG"). "Cell Ministry" is the name of
-the signed-in app only. The page runs from midnight at the top to cream at the bottom:
+the signed-in app only. One photo hero, then light sections:
 
-1. Hero: one photograph in three planes. The stage is furthest and lags the scroll; the
-   statement "Giving your life a meaning." floats in the middle; the crowd, cut out of the
-   same photo (`hero-crowd.png`), is nearest and moves with the page, so raised hands and
-   heads pass in front of the words. Wordmark and the section keys sit along the bottom.
-2. Join us: a pinned horizontal run. The section holds still while vertical scrolling slides
-   the panels sideways (intro, four services, venue). Each photo drifts inside its panel the
-   other way. A gold line tracks progress.
-3. Listen in: the audio player over a blurred worship photo that drifts slower than the page.
-4. Live event: the LIFT card tilts upright as it enters, with photos from the last LIFT
-   drifting behind it at their own speeds. The background turns from midnight to cream here.
-5. Gallery: follows `gallery.jpeg`. A strip of photos bent around a cylinder: the centre card
-   nearest, the edges turning away. It is a real horizontal scroller; page scroll adds drift.
+1. Hero: one full-width photo (FYB Thanksgiving Sunday) with the statement "Giving your life
+   a meaning." on a soft shade across the top. The photo lags the scroll slightly. Wordmark
+   and the section pills sit along the bottom on clear glass.
+2. Join us (cream): the zone's flyers, whole, in a pinned horizontal run: the section holds
+   still while vertical scrolling slides the row sideways. Title and time under each flyer,
+   a venue card with directions at the end.
+3. From the service (white): the media team's designed recap and excerpt slides, one
+   swipeable row per set.
+4. Listen in (cream): the audio player on a white card.
+5. Live event (cream): the LIFT flyer beside its details on a white card.
+6. Gallery (white): follows `design/references/gallery.jpeg`. Large candid photos bent
+   around a cylinder; a real horizontal scroller with page-scroll drift. The photos come from
+   the photographers' Drive folders and the selection changes every six hours
+   (`lib/gallery-source.ts`); until the Drive key is set it rotates the bundled photos.
 
-Reduced motion turns every one of these off: the hero is a still photo, Join us becomes a
-swipeable row at normal height, the gallery is flat.
+Reduced motion turns the movement off: the hero is still, Join us is a swipeable row at
+normal height, the gallery is flat.
 
-Service, audio, event and gallery details live in `lib/site-content.ts`.
+Content lives in `lib/site-content.ts`.
 
-## Navigation keys (skeuomorphism)
+## Navigation (Liquid Glass)
 
-The section links are physical keys set in a recessed console (`key`, `key-gold`,
-`key-lamp`, `console` utilities in `app/globals.css`). A key has a bevelled cap lit from
-above, stands 4px proud of its base, and sinks 3px into the well when pressed. The current
-section's key has its lamp lit gold. "Sign in" is the gold key, the one primary action.
-
-This replaces the glass floating pill. Overriding the HIG here on surface (taste wins on
-surface): the HIG puts Liquid Glass on floating navigation, and the brief asked for
-skeuomorphic keys. Targets, focus and contrast still follow the HIG: every key is at least
-44px tall and has a gold focus ring. The keys are for the public site only; the app keeps flat
-controls.
+Section pills on Liquid Glass, ported per the HIG web translation: `glass-clear` over the
+hero photo (already dimmed by the hero's shade, so no extra dimming), `glass-regular` for the
+copy that docks at the bottom of the screen over light content. Glass is for navigation only,
+never content. Both fall back to a solid surface when `backdrop-filter` is unsupported, under
+reduced transparency and under increased contrast. No imitation specular highlights. The
+current section is a solid ink pill; "Sign in" is the gold pill.
 
 ## Colour
 
@@ -129,7 +129,7 @@ bigger glyph. At least 8px between adjacent targets.
 | xl | 36px | Landing bands and hero tiles |
 | full | 9999px | App buttons and pills |
 
-App buttons are pills. Public-site keys are 14px-radius caps; photo panels are 22 to 36px.
+Buttons are pills. Flyers and photo cards are 18 to 24px; white section cards 24 to 32px.
 
 ## Elevation
 
@@ -140,8 +140,7 @@ App buttons are pills. Public-site keys are 14px-radius caps; photo panels are 2
 | 2 | `--lift-2` + glass | tone step + glass | Floating nav, toolbars |
 | 3 | `--lift-3` | tone step + border | Sheets, modals, popovers |
 
-Glass (backdrop blur) belongs to level 2 only: the app's floating navigation. Never on
-content. The public site's floating navigation is the key console instead.
+Glass (backdrop blur) belongs to level 2 only: floating navigation. Never on content.
 It falls back to a solid surface under `prefers-reduced-transparency`,
 `prefers-contrast: more`, and where `backdrop-filter` is unsupported.
 
@@ -165,9 +164,10 @@ server and browser never disagree.
 
 ## Imagery
 
-Real photographs of people, never icon grids. Service photos are in
-`public/images/zoneg/live/` (from the photographers' Drive folders, 2000px); flyers are in
-`public/images/zoneg/`. Sources are in `public/images/zoneg/SOURCE.md`.
+Real photographs of people, never icon grids, and never a cut-out or mask unless it is
+clean. Flyers are in `public/images/zoneg/flyers/`, designed slides in
+`public/images/zoneg/excerpts/`, bundled candid photos in `public/images/zoneg/live/`.
+Sources are in `public/images/zoneg/SOURCE.md`.
 
 ## Accessibility sweep, before anything ships
 

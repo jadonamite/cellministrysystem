@@ -3,22 +3,23 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { INSTAGRAM_URL } from "@/lib/site-content";
+import type { GalleryPhoto } from "@/lib/gallery-source";
 import { useReducedMotionSafe } from "@/lib/use-reduced-motion";
-import { GALLERY, INSTAGRAM_URL } from "@/lib/site-content";
-import { FlyerButton } from "./flyer-button";
+import { FlyerButton, type Picture } from "./flyer-button";
 
 /**
- * Follows design/references/gallery.jpeg: a strip of photos bent around a
- * cylinder, nearest at the centre, turning away towards the edges. The strip
- * is a real horizontal scroller (swipe, trackpad, arrow keys); page scroll
- * adds a slow sideways drift on top.
+ * Follows design/references/gallery.jpeg: large photos bent around a cylinder,
+ * nearest at the centre, turning away towards the edges. The strip is a real
+ * horizontal scroller; page scroll adds a slow sideways drift. The photos come
+ * from lib/gallery-source.ts and change every few hours.
  */
-export function Gallery() {
+export function Gallery({ photos }: { photos: GalleryPhoto[] }) {
   const reduce = useReducedMotionSafe();
   const section = useRef<HTMLElement>(null);
   const scroller = useRef<HTMLUListElement>(null);
   const { scrollYProgress } = useScroll({ target: section, offset: ["start end", "end start"] });
-  const drift = useTransform(scrollYProgress, [0, 1], ["9vw", "-9vw"]);
+  const drift = useTransform(scrollYProgress, [0, 1], ["7vw", "-7vw"]);
 
   // bend each card by its distance from the centre of the screen
   useEffect(() => {
@@ -36,9 +37,9 @@ export function Gallery() {
       for (const card of cards) {
         const r = card.parentElement!.getBoundingClientRect();
         // on narrow screens the curve is measured in cards, so neighbours stay in view
-        const span = Math.max(half, r.width * 1.8);
-        const d = Math.max(-1.6, Math.min(1.6, (r.left + r.width / 2 - half) / span));
-        card.style.transform = `translateZ(${(-d * d * 150).toFixed(1)}px) rotateY(${(d * 32).toFixed(2)}deg)`;
+        const span = Math.max(half, r.width * 1.6);
+        const d = Math.max(-1.5, Math.min(1.5, (r.left + r.width / 2 - half) / span));
+        card.style.transform = `translateZ(${(-d * d * 120).toFixed(1)}px) rotateY(${(d * 24).toFixed(2)}deg)`;
       }
     };
     const queue = () => {
@@ -58,7 +59,7 @@ export function Gallery() {
     };
   }, [reduce, drift]);
 
-  // start with the strip centred on its middle photo
+  // start centred on the middle photo
   useEffect(() => {
     const list = scroller.current;
     if (list) list.scrollLeft = (list.scrollWidth - list.clientWidth) / 2;
@@ -68,53 +69,57 @@ export function Gallery() {
     const list = scroller.current;
     const card = list?.querySelector("li");
     if (!list || !card) return;
-    list.scrollBy({ left: dir * (card.getBoundingClientRect().width + 20) * 2, behavior: reduce ? "auto" : "smooth" });
+    list.scrollBy({ left: dir * (card.getBoundingClientRect().width + 24), behavior: reduce ? "auto" : "smooth" });
   }
 
   return (
-    <section id="gallery" ref={section} className="scroll-mt-4 overflow-hidden bg-cream pt-28 pb-24 text-ink sm:pt-36 sm:pb-32">
+    <section id="gallery" ref={section} className="scroll-mt-4 overflow-hidden bg-white pt-24 pb-24 text-ink sm:pt-32 sm:pb-32">
       <div className="px-4 text-center sm:px-10">
         <p className="text-[0.8125rem] font-semibold tracking-[0.12em] text-ink/70 uppercase">Gallery</p>
         <h2 className="display mt-4 text-[clamp(2.75rem,7vw,5.75rem)]">
           Moments from <span className="serif-highlight text-stage">Zone G.</span>
         </h2>
+        <p className="mx-auto mt-4 max-w-[40ch] text-[1rem] leading-[1.5] text-ink/70">
+          Straight from the photographers. The selection changes through the day.
+        </p>
       </div>
 
-      <motion.div style={reduce ? undefined : { x: drift }} className="mt-14 sm:mt-20">
+      <motion.div style={reduce ? undefined : { x: drift }} className="mt-12 sm:mt-16">
         <ul
           ref={scroller}
           aria-label="Photos from Zone G services and events"
-          className="flex snap-x snap-proximity gap-5 overflow-x-auto px-[max(1rem,calc(50vw-9rem))] py-10 [scrollbar-width:none] sm:gap-6"
+          className="flex snap-x snap-proximity gap-6 overflow-x-auto px-[max(1rem,calc(50vw-13rem))] py-10 [scrollbar-width:none]"
         >
-          {GALLERY.map((g) => (
-            <li key={g.src.src} className="w-[min(64vw,18rem)] shrink-0 snap-center [perspective:900px]">
+          {photos.map((p) => (
+            <li key={p.key} className="w-[min(80vw,26rem)] shrink-0 snap-center [perspective:1200px]">
               <div data-bend className="will-change-transform">
-                <FlyerButton photo={g.src} alt={g.alt} title={g.event} kind="photo" className="group block w-full rounded-[22px] hover:scale-100 active:scale-[0.98]">
-                  <span className="relative block aspect-[4/5] overflow-hidden rounded-[22px] bg-ink/10 shadow-[0_30px_50px_-24px_rgb(11_16_48/0.55)]">
-                    <Image
-                      src={g.src}
-                      alt={g.alt}
-                      fill
-                      sizes="(min-width: 640px) 18rem, 64vw"
-                      className="object-cover transition-transform duration-[350ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
-                    />
+                <FlyerButton
+                  photo={full(p)}
+                  alt={p.alt}
+                  title={p.event}
+                  kind="photo"
+                  className="group block w-full rounded-[24px] hover:scale-100 active:scale-[0.99]"
+                >
+                  <span className="relative block aspect-[4/5] overflow-hidden rounded-[24px] bg-ink/5 shadow-[0_30px_60px_-30px_rgb(11_16_48/0.55)]">
+                    <Photo photo={p} />
                   </span>
                 </FlyerButton>
-                <p className="mt-3 px-1 text-[0.875rem] leading-snug text-ink/70">{g.event}</p>
+                <p className="mt-3 px-1 text-[0.9375rem] text-ink/70">{p.event}</p>
               </div>
             </li>
           ))}
         </ul>
       </motion.div>
 
-      <div className="mt-6 flex flex-wrap items-center justify-center gap-3 px-4">
-        <button type="button" onClick={() => page(-1)} aria-label="Previous photos" className="key w-11 justify-center !px-0">
-          <Arrow className="rotate-180" />
-        </button>
-        <button type="button" onClick={() => page(1)} aria-label="Next photos" className="key w-11 justify-center !px-0">
-          <Arrow />
-        </button>
-        <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer" className="key key-gold px-5 text-[0.9375rem] font-semibold">
+      <div className="mt-4 flex flex-wrap items-center justify-center gap-3 px-4">
+        <PageButton label="Previous photo" onClick={() => page(-1)} flip />
+        <PageButton label="Next photo" onClick={() => page(1)} />
+        <a
+          href={INSTAGRAM_URL}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex min-h-11 items-center rounded-full bg-stage px-5 text-[0.9375rem] font-semibold text-white transition-opacity duration-150 hover:opacity-90"
+        >
           More on @globalzoneg
         </a>
       </div>
@@ -122,19 +127,55 @@ export function Gallery() {
   );
 }
 
-function Arrow({ className }: { className?: string }) {
+const CARD_SIZES = "(min-width: 640px) 26rem, 80vw";
+
+function Photo({ photo: p }: { photo: GalleryPhoto }) {
+  const cls = "object-cover transition-transform duration-[350ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]";
+  if (p.image.kind === "local") {
+    return <Image src={p.image.src} alt={p.alt} fill sizes={CARD_SIZES} className={cls} />;
+  }
+  const base = `/gallery-photo/${p.image.id}`;
   return (
-    <svg
-      viewBox="0 0 24 24"
-      aria-hidden
-      className={`size-5 ${className ?? ""}`}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+    // already sized by /gallery-photo, so a plain img with a srcset is enough
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={`${base}/960`}
+      srcSet={`${base}/480 480w, ${base}/960 960w, ${base}/1600 1600w`}
+      sizes={CARD_SIZES}
+      alt={p.alt}
+      loading="lazy"
+      decoding="async"
+      className={`absolute inset-0 h-full w-full ${cls}`}
+    />
+  );
+}
+
+function full(p: GalleryPhoto): Picture {
+  if (p.image.kind === "local") return p.image.src;
+  const { id, width, height } = p.image;
+  return { src: `/gallery-photo/${id}/1600`, width, height, unoptimized: true };
+}
+
+function PageButton({ label, onClick, flip }: { label: string; onClick: () => void; flip?: boolean }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={label}
+      className="inline-grid size-11 place-items-center rounded-full border border-ink/15 text-ink transition-colors duration-150 hover:bg-ink/[0.05]"
     >
-      <path d="M5 12h14M13 6l6 6-6 6" />
-    </svg>
+      <svg
+        viewBox="0 0 24 24"
+        aria-hidden
+        className={`size-5 ${flip ? "rotate-180" : ""}`}
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M5 12h14M13 6l6 6-6 6" />
+      </svg>
+    </button>
   );
 }

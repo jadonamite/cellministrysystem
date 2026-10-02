@@ -265,106 +265,40 @@
   overflow: hidden;
 }
 
-/* skeuomorphic key: a physical keycap on a console. The cap catches light on
-   its top edge, sits 4px proud of its base, and sinks into the well when
-   pressed. Public site only; the app keeps flat controls. */
-@utility key {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  min-height: 44px;
-  padding-inline: 1.125rem;
-  border-radius: 14px;
-  color: #F6EBDE;
-  background: linear-gradient(180deg, #2B3570 0%, #1B2257 7%, #161C48 55%, #10153A 100%);
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.22),
-    inset 0 -2px 0 rgb(0 0 0 / 0.35),
-    0 0 0 1px rgb(3 5 20 / 0.9),
-    0 4px 0 0 #04061A,
-    0 9px 18px -6px rgb(0 0 0 / 0.7);
-  transform: translateY(0);
-  transition:
-    transform var(--dur-1) var(--ease-arrive),
-    box-shadow var(--dur-1) var(--ease-arrive),
-    filter var(--dur-1) var(--ease-arrive);
-  -webkit-tap-highlight-color: transparent;
-  &:hover {
-    filter: brightness(1.12);
+/* Liquid Glass, ported (see DESIGN.md). Navigation and controls only, never content.
+   clear: floats over the hero photo, which is already dimmed, so no extra dimming.
+   regular: the docked bar over light content; opaque enough to hold text contrast. */
+@utility glass-clear {
+  background: rgb(255 255 255 / 0.14);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgb(255 255 255 / 0.22);
+  box-shadow: 0 10px 30px -12px rgb(0 0 0 / 0.45);
+}
+@utility glass-regular {
+  background: rgb(255 255 255 / 0.72);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgb(11 16 48 / 0.08);
+  box-shadow: 0 12px 32px -12px rgb(11 16 48 / 0.28);
+}
+@supports not (backdrop-filter: blur(1px)) {
+  .glass-clear { background: rgb(7 11 36 / 0.92); }
+  .glass-regular { background: #FFFFFF; }
+}
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  .glass-clear,
+  .glass-regular {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
-  &:focus-visible {
-    outline: 2px solid #E9B949;
-    outline-offset: 3px;
-  }
-  &:active {
-    transform: translateY(3px);
-    box-shadow:
-      inset 0 1px 0 rgb(255 255 255 / 0.12),
-      inset 0 2px 6px rgb(0 0 0 / 0.45),
-      0 0 0 1px rgb(3 5 20 / 0.9),
-      0 1px 0 0 #04061A,
-      0 3px 6px -3px rgb(0 0 0 / 0.6);
-  }
+  .glass-clear { background: #070B24; border-color: rgb(255 255 255 / 0.5); }
+  .glass-regular { background: #FFFFFF; border-color: #0B1030; }
 }
 
-/* gold cap: the one primary action on the console */
-@utility key-gold {
-  color: #0B1030;
-  background: linear-gradient(180deg, #FBE3A0 0%, #F0C863 8%, #E9B949 55%, #D9A532 100%);
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.65),
-    inset 0 -2px 0 rgb(120 80 0 / 0.35),
-    0 0 0 1px #6E4E00,
-    0 4px 0 0 #6E4E00,
-    0 9px 18px -6px rgb(0 0 0 / 0.7);
-  &:active {
-    box-shadow:
-      inset 0 1px 0 rgb(255 255 255 / 0.4),
-      inset 0 2px 6px rgb(110 78 0 / 0.5),
-      0 0 0 1px #6E4E00,
-      0 1px 0 0 #6E4E00,
-      0 3px 6px -3px rgb(0 0 0 / 0.6);
-  }
-}
-
-/* the indicator lamp inside a key; lit gold when the key is current */
-@utility key-lamp {
-  width: 6px;
-  height: 6px;
-  flex-shrink: 0;
-  border-radius: 9999px;
-  background: #2A2F55;
-  box-shadow: inset 0 1px 1px rgb(0 0 0 / 0.6);
-  transition: background var(--dur-2) var(--ease-arrive), box-shadow var(--dur-2) var(--ease-arrive);
-  [aria-current] > & {
-    background: #FFD978;
-    box-shadow: 0 0 0 1px rgb(233 185 73 / 0.5), 0 0 10px 2px rgb(233 185 73 / 0.75);
-  }
-}
-
-/* the console the keys sit in: a recessed plate */
-@utility console {
-  border-radius: 22px;
-  background: linear-gradient(180deg, #0A0F2E 0%, #070B24 100%);
-  box-shadow:
-    inset 0 2px 6px rgb(0 0 0 / 0.65),
-    inset 0 -1px 0 rgb(255 255 255 / 0.06),
-    0 0 0 1px rgb(255 255 255 / 0.07),
-    0 20px 40px -12px rgb(0 0 0 / 0.65);
-}
-
-/* the public site's dark sections: the stage-blue ring would vanish on midnight */
-.bg-midnight :focus-visible,
-.bg-midnight-2 :focus-visible {
+/* the public site's dark hero: the stage-blue ring would vanish on the photo */
+.bg-midnight :focus-visible {
   outline-color: #E9B949;
-}
-
-@media (prefers-contrast: more) {
-  .key {
-    background: #10153A;
-    outline: 1px solid #F6EBDE;
-  }
 }
 
 /* horizontal overflow slider: charts and tables keep their desktop form on

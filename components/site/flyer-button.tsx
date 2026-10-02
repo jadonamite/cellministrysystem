@@ -4,6 +4,9 @@ import Image, { type StaticImageData } from "next/image";
 import { cn } from "@/lib/utils";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
+/** An imported image, or a path with its size (unoptimized for /gallery-photo, which is already sized). */
+export type Picture = StaticImageData | { src: string; width: number; height: number; unoptimized?: boolean };
+
 /**
  * Wraps a cropped flyer or photo; tapping it opens the whole image. When the
  * children are visible text, pass `textLabel` so the button is named by that
@@ -18,7 +21,7 @@ export function FlyerButton({
   className,
   children,
 }: {
-  photo: StaticImageData;
+  photo: Picture;
   alt: string;
   title: string;
   kind?: "flyer" | "photo";
@@ -38,7 +41,13 @@ export function FlyerButton({
         <DialogTitle className="sr-only">
           {title} {kind}
         </DialogTitle>
-        <Image src={photo} alt={alt} sizes="(min-width: 640px) 512px, 100vw" className="h-auto w-full rounded-2xl" />
+        <Image
+          src={photo}
+          alt={alt}
+          unoptimized={"unoptimized" in photo && photo.unoptimized}
+          sizes="(min-width: 640px) 512px, 100vw"
+          className="h-auto max-h-[80svh] w-full rounded-2xl object-contain"
+        />
       </DialogContent>
     </Dialog>
   );

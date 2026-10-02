@@ -2,8 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useReducedMotionSafe } from "@/lib/use-reduced-motion";
 import { INSTAGRAM_URL, LISTEN } from "@/lib/site-content";
 import { cn } from "@/lib/utils";
 
@@ -19,11 +17,6 @@ function fmt(s: number) {
 
 export function ListenIn() {
   const audio = useRef<HTMLAudioElement>(null);
-  const section = useRef<HTMLElement>(null);
-  const reduce = useReducedMotionSafe();
-  const { scrollYProgress } = useScroll({ target: section, offset: ["start end", "end start"] });
-  const backdropY = useTransform(scrollYProgress, [0, 1], ["-12%", "12%"]);
-  const backdropScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.25, 1.12, 1.25]);
   const [playing, setPlaying] = useState(false);
   const [time, setTime] = useState(0);
   const [duration, setDuration] = useState(NaN);
@@ -69,32 +62,16 @@ export function ListenIn() {
   }
 
   return (
-    <section
-      id="listen-in"
-      ref={section}
-      className="relative isolate scroll-mt-4 overflow-hidden bg-midnight px-4 py-28 text-cream sm:px-10 sm:py-40"
-    >
-      {/* the worship photo, out of focus, drifting slower than the page */}
-      <motion.div
-        aria-hidden
-        style={reduce ? undefined : { y: backdropY, scale: backdropScale }}
-        className="absolute inset-0 -z-20"
-      >
-        <Image src={LISTEN.backdrop} alt="" fill sizes="100vw" className="object-cover object-[50%_30%] blur-[2px] saturate-[1.15]" />
-      </motion.div>
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,#070B24_0%,rgb(7_11_36/0.72)_22%,rgb(7_11_36/0.72)_78%,#070B24_100%)]"
-      />
+    <section id="listen-in" className="scroll-mt-4 bg-cream px-4 py-24 text-ink sm:px-10 sm:py-32">
       <div className="mx-auto max-w-5xl">
         <h2 className="display text-[clamp(2.5rem,7vw,5.5rem)]">
-          Listen <span className="serif-highlight text-highlight">in</span>
+          Listen <span className="serif-highlight text-stage">in</span>
         </h2>
-        <p className="mt-4 max-w-lg text-[1.0625rem] leading-[1.55] text-cream/80">
+        <p className="mt-4 max-w-lg text-[1.0625rem] leading-[1.55] text-ink/75">
           Messages from our services, for the commute, the kitchen or the walk to lectures.
         </p>
 
-        <div className="mt-12 flex flex-col gap-6 rounded-[36px] bg-midnight/55 p-4 ring-1 ring-cream/12 backdrop-blur-xl sm:flex-row sm:items-center sm:gap-8 sm:p-5">
+        <div className="mt-12 flex flex-col gap-6 rounded-[32px] bg-white p-4 shadow-[0_24px_48px_-28px_rgb(11_16_48/0.35)] sm:flex-row sm:items-center sm:gap-8 sm:p-5">
           <div className="relative aspect-square w-full shrink-0 overflow-hidden rounded-[24px] sm:w-56">
             <Image src={LISTEN.artwork} alt={LISTEN.artworkAlt} fill sizes="(min-width: 640px) 224px, 100vw" className="object-cover" />
           </div>
@@ -102,7 +79,7 @@ export function ListenIn() {
           <div className="flex min-w-0 flex-1 flex-col gap-5 sm:pr-4">
             <div>
               <p className="text-[1.5rem] leading-tight font-bold">{LISTEN.title}</p>
-              <p className="mt-1 text-[1rem] text-cream/75">{LISTEN.speaker}</p>
+              <p className="mt-1 text-[1rem] text-ink/70">{LISTEN.speaker}</p>
             </div>
 
             <div className="relative h-14">
@@ -113,7 +90,7 @@ export function ListenIn() {
                     style={{ height: `${(h * 100).toFixed(1)}%` }}
                     className={cn(
                       "flex-1 rounded-full transition-colors duration-150",
-                      i / BARS.length < progress ? "bg-highlight" : "bg-cream/25",
+                      i / BARS.length < progress ? "bg-stage" : "bg-ink/15",
                     )}
                   />
                 ))}
@@ -136,7 +113,7 @@ export function ListenIn() {
                 onClick={() => skip(-15)}
                 disabled={!ready}
                 aria-label="Back 15 seconds"
-                className="inline-grid size-11 place-items-center rounded-full text-[0.8125rem] font-semibold text-cream/80 hover:bg-cream/10 disabled:opacity-40"
+                className="inline-grid size-11 place-items-center rounded-full text-[0.8125rem] font-semibold text-ink/75 hover:bg-ink/[0.06] disabled:opacity-40"
               >
                 -15
               </button>
@@ -163,19 +140,19 @@ export function ListenIn() {
                 onClick={() => skip(15)}
                 disabled={!ready}
                 aria-label="Forward 15 seconds"
-                className="inline-grid size-11 place-items-center rounded-full text-[0.8125rem] font-semibold text-cream/80 hover:bg-cream/10 disabled:opacity-40"
+                className="inline-grid size-11 place-items-center rounded-full text-[0.8125rem] font-semibold text-ink/75 hover:bg-ink/[0.06] disabled:opacity-40"
               >
                 +15
               </button>
-              <p className="ml-auto text-[0.875rem] tabular-nums text-cream/75">
+              <p className="ml-auto text-[0.875rem] tabular-nums text-ink/70">
                 {fmt(time)} / {fmt(duration)}
               </p>
             </div>
 
             {!ready && (
-              <p className="text-[0.9375rem] text-cream/75">
+              <p className="text-[0.9375rem] text-ink/70">
                 The first message is on its way.{" "}
-                <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer" className="font-semibold text-cream underline underline-offset-4">
+                <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer" className="font-semibold text-stage underline underline-offset-4">
                   Follow @globalzoneg
                 </a>{" "}
                 to hear when it lands.
