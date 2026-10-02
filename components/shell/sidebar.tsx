@@ -22,7 +22,7 @@ export function Sidebar({ identity, progress }: Props) {
     <aside className="fixed inset-y-0 left-0 z-40 hidden w-16 flex-col border-r border-zinc-200/80 bg-white/80 dark:border-white/[0.08] dark:bg-zinc-950/75 backdrop-blur-2xl md:flex lg:w-64 transition-all">
       
       {/* Brand Header */}
-      <Link href="/" className="flex items-center gap-3 px-4 pt-7 pb-6 lg:px-6">
+      <Link href="/dashboard" className="flex items-center gap-3 px-4 pt-7 pb-6 lg:px-6">
         <div className="relative size-9 rounded-2xl bg-purple-600/15 border border-purple-500/30 flex items-center justify-center shadow-[0_0_20px_rgba(168,85,247,0.25)] shrink-0">
           <svg className="size-5 text-purple-600 dark:text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75">
             <circle cx="12" cy="12" r="8.5" strokeDasharray="3 3" strokeOpacity="0.6" />

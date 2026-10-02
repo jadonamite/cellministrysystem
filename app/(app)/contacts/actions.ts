@@ -61,7 +61,7 @@ export async function logOutcome(input: LogOutcomeInput): Promise<LogOutcomeResu
   revalidateTag("outreach", "max");
   revalidatePath("/contacts");
   revalidatePath("/follow-ups");
-  revalidatePath("/");
+  revalidatePath("/dashboard");
   return { ok: true };
 }
 
@@ -89,6 +89,6 @@ export async function deleteContact(id: string): Promise<DeleteContactResult> {
   revalidateTag("outreach", "max");
   revalidatePath("/contacts");
   revalidatePath("/follow-ups");
-  revalidatePath("/");
+  revalidatePath("/dashboard");
   return { ok: true };
 }

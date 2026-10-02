@@ -8,7 +8,7 @@ import { getGroups, ancestryMap } from "@/lib/groups";
 import { DEFAULT_INVITE } from "@/lib/contact-links";
 import { Icon } from "@/components/icons";
 import { getSession } from "@/lib/auth";
-import { logout } from "../login/actions";
+import { logout } from "@/app/login/actions";
 import { saveAdminName, saveInviteTemplate, clearAdminName } from "./actions";
 
 export const metadata = { title: "Settings · Outreach Call Center" };

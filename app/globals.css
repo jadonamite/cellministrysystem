@@ -4,16 +4,32 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Token meanings live in DESIGN.md. Components use these names, never raw values. */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
+  --font-sans: var(--font-google-sans);
+  --font-heading: var(--font-google-sans);
+  --font-serif: var(--font-instrument-serif);
   --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
-  --font-serif: var(--font-serif);
-  --font-script: var(--font-serif);
+  --color-label-2: var(--label-2);
+  --color-label-3: var(--label-3);
+  --color-band: var(--band);
+  --color-highlight: var(--highlight);
+  --color-highlight-foreground: var(--highlight-foreground);
   --color-gold: var(--gold);
   --color-gold-soft: var(--gold-soft);
+  --color-midnight: #070B24;
+  --color-midnight-2: #10163A;
+  --color-stage: #1E40D8;
+  --color-cream: #F6EBDE;
+  --color-ink: #0B1030;
+  --color-magenta: #C2187A;
+  --color-team-1: var(--team-1);
+  --color-team-2: var(--team-2);
+  --color-team-3: var(--team-3);
+  --color-team-4: var(--team-4);
+  --color-team-5: var(--team-5);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -43,225 +59,316 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 36px;
+  --radius-2xl: 24px;
+  --radius-3xl: 36px;
+  --radius-4xl: 36px;
+
+  --shadow-lift-1: var(--lift-1);
+  --shadow-lift-2: var(--lift-2);
+  --shadow-lift-3: var(--lift-3);
+
+  --ease-arrive: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-leave: cubic-bezier(0.4, 0, 1, 1);
 }
 
-/*
- * Cell Ministry System design tokens.
- *
- * Light-first: a white canvas lit by irradiance — soft coloured light sources
- * bleeding in from the edges, never a gradient sweeping across the page.
- * Lavender purple carries hierarchy and state; gold marks the one figure per
- * screen that needs a human to act. Teams and cells stay colour-coded, with a
- * cell inheriting its team's hue so colour encodes the hierarchy itself.
- */
 :root {
-  --background: #F4F4F6;
-  --foreground: #09090B;
+  color-scheme: light;
+
+  --background: #F7F3EC;
+  --foreground: #0B1030;
+  --label-2: #4A4F66;
+  --label-3: #666B84;
   --card: #FFFFFF;
-  --card-foreground: #09090B;
+  --card-foreground: #0B1030;
   --popover: #FFFFFF;
-  --popover-foreground: #09090B;
-  --primary: #7C3AED;
+  --popover-foreground: #0B1030;
+
+  --primary: #1E40D8;
   --primary-foreground: #FFFFFF;
-  --secondary: #F4F4F5;
-  --secondary-foreground: #18181B;
-  --muted: #F4F4F5;
-  --muted-foreground: #71717A;
-  --accent: #F4F4F5;
-  --accent-foreground: #18181B;
-  --destructive: #EF4444;
-  --border: #E4E4E7;
-  --input: #E4E4E7;
-  --ring: #7C3AED;
-  --chart-1: #7C3AED;
-  --chart-2: #10B981;
-  --chart-3: #F59E0B;
-  --chart-4: #EC4899;
-  --chart-5: #3B82F6;
-  --radius: 1rem;
+  --band: #1E40D8;
+  --highlight: #E9B949;
+  --highlight-foreground: #0B1030;
+  --gold: #8A6300;
+  --gold-soft: #FBF0D4;
+
+  --secondary: #EDE8DF;
+  --secondary-foreground: #0B1030;
+  --muted: #EFEAE1;
+  --muted-foreground: #4A4F66;
+  --accent: #E6EAFB;
+  --accent-foreground: #1E40D8;
+  --destructive: #C4352B;
+  --border: #E2DCD0;
+  --input: #D8D1C3;
+  --ring: #1E40D8;
+
+  --team-1: #1E40D8; /* stage blue */
+  --team-2: #B07D00; /* gold       */
+  --team-3: #C2187A; /* magenta    */
+  --team-4: #138585; /* teal       */
+  --team-5: #6B3FA0; /* violet     */
+  --cell-tint: 86%;
+
+  --chart-1: #1E40D8;
+  --chart-2: #E9B949;
+  --chart-3: #C2187A;
+  --chart-4: #138585;
+  --chart-5: #6B3FA0;
+
   --sidebar: #FFFFFF;
-  --sidebar-foreground: #09090B;
-  --sidebar-primary: #7C3AED;
+  --sidebar-foreground: #0B1030;
+  --sidebar-primary: #1E40D8;
   --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #F4F4F5;
-  --sidebar-accent-foreground: #18181B;
-  --sidebar-border: #E4E4E7;
-  --sidebar-ring: #7C3AED;
+  --sidebar-accent: #E6EAFB;
+  --sidebar-accent-foreground: #1E40D8;
+  --sidebar-border: #E2DCD0;
+  --sidebar-ring: #1E40D8;
 
-  /* the one highlight — reserved for the figure that needs action */
-  --gold: #D97706;
-  --gold-soft: #FEF3C7;
+  --surface-2: #F2EDE4;
+  --lift-1: 0 1px 2px rgb(11 16 48 / 0.04), 0 8px 24px -12px rgb(11 16 48 / 0.12);
+  --lift-2: 0 12px 32px -12px rgb(11 16 48 / 0.22);
+  --lift-3: 0 24px 64px -16px rgb(11 16 48 / 0.28);
+  --glass: rgb(255 255 255 / 0.72);
 
-  /* team hues; cells inherit their team's hue (see --cell-tint) */
-  --team-1: #7C3AED; /* violet */
-  --team-2: #10B981; /* emerald */
-  --team-3: #F59E0B; /* amber  */
-  --team-4: #EC4899; /* rose   */
-  --team-5: #3B82F6; /* blue   */
-  --cell-tint: 88%;
+  --dur-1: 150ms;
+  --dur-2: 250ms;
+  --dur-3: 350ms;
 
-  --surface-2: #F4F4F5;
-  --gloss-top: rgba(255, 255, 255, 0.9);
-  --gloss-edge: rgba(124, 58, 237, 0.15);
-  --lift: 0 12px 34px -14px rgba(0, 0, 0, 0.08);
-
-  /* subtle ambient irradiance */
-  --irr-1: rgba(124, 58, 237, 0.08);
-  --irr-2: rgba(245, 158, 11, 0.06);
-  --irr-3: rgba(56, 189, 248, 0.06);
-  --irr-4: rgba(236, 72, 153, 0.06);
-  --irr-veil: rgba(250, 250, 250, 0.7);
+  --radius: 24px;
 }
 
 .dark {
-  --background: #15151A;
-  --foreground: #F4F4F8;
-  --card: #1D1D24;
-  --card-foreground: #F4F4F8;
-  --popover: #22222A;
-  --popover-foreground: #F4F4F8;
-  --primary: #8B5CF6;
-  --primary-foreground: #FFFFFF;
-  --secondary: #24242D;
-  --secondary-foreground: #F4F4F8;
-  --muted: #24242D;
-  --muted-foreground: #9CA3AF;
-  --accent: #2D2D38;
-  --accent-foreground: #DDD6FE;
-  --destructive: #EF4444;
-  --border: rgba(255, 255, 255, 0.10);
-  --input: rgba(255, 255, 255, 0.10);
-  --ring: #8B5CF6;
-  --chart-1: #8B5CF6;
-  --chart-2: #10B981;
-  --chart-3: #F59E0B;
-  --chart-4: #EC4899;
-  --chart-5: #3B82F6;
-  --sidebar: #1A1A22;
-  --sidebar-foreground: #F4F4F8;
-  --sidebar-primary: #8B5CF6;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #24242D;
-  --sidebar-accent-foreground: #DDD6FE;
-  --sidebar-border: rgba(255, 255, 255, 0.10);
-  --sidebar-ring: #8B5CF6;
+  color-scheme: dark;
 
-  --gold: #F59E0B;
-  --gold-soft: rgba(245, 158, 11, 0.14);
+  --background: #070B24;
+  --foreground: #F6EBDE;
+  --label-2: #A9AFCB;
+  --label-3: #7E85A6;
+  --card: #10163A;
+  --card-foreground: #F6EBDE;
+  --popover: #171E48;
+  --popover-foreground: #F6EBDE;
 
-  --team-1: #8B5CF6;
-  --team-2: #10B981;
-  --team-3: #F59E0B;
-  --team-4: #EC4899;
-  --team-5: #3B82F6;
-  --cell-tint: 78%;
+  --primary: #7B93FF;
+  --primary-foreground: #070B24;
+  --band: #1E40D8;
+  --highlight: #E9B949;
+  --highlight-foreground: #0B1030;
+  --gold: #E9B949;
+  --gold-soft: rgb(233 185 73 / 0.14);
 
-  --surface-2: #2A1A47;
-  --gloss-top: rgba(255, 255, 255, 0.10);
-  --gloss-edge: rgba(201, 170, 255, 0.55);
-  --lift: 0 18px 50px -12px rgba(0, 0, 0, 0.62);
+  --secondary: #171E48;
+  --secondary-foreground: #F6EBDE;
+  --muted: #171E48;
+  --muted-foreground: #A9AFCB;
+  --accent: #1A2560;
+  --accent-foreground: #B5C2FF;
+  --destructive: #F0645A;
+  --border: rgb(255 255 255 / 0.09);
+  --input: rgb(255 255 255 / 0.12);
+  --ring: #7B93FF;
 
-  --irr-1: rgba(183, 148, 246, 0.40);
-  --irr-2: rgba(255, 184, 107, 0.24);
-  --irr-3: rgba(127, 227, 232, 0.20);
-  --irr-4: rgba(199, 125, 255, 0.32);
-  --irr-veil: rgba(21, 12, 36, 0.62);
+  --team-1: #7B93FF;
+  --team-2: #E9B949;
+  --team-3: #E35AA6;
+  --team-4: #3DBDBD;
+  --team-5: #A88BE0;
+  --cell-tint: 76%;
+
+  --chart-1: #7B93FF;
+  --chart-2: #E9B949;
+  --chart-3: #E35AA6;
+  --chart-4: #3DBDBD;
+  --chart-5: #A88BE0;
+
+  --sidebar: #0C1130;
+  --sidebar-foreground: #F6EBDE;
+  --sidebar-primary: #7B93FF;
+  --sidebar-primary-foreground: #070B24;
+  --sidebar-accent: #1A2560;
+  --sidebar-accent-foreground: #B5C2FF;
+  --sidebar-border: rgb(255 255 255 / 0.09);
+  --sidebar-ring: #7B93FF;
+
+  --surface-2: #141B42;
+  --lift-1: none;
+  --lift-2: 0 16px 40px -12px rgb(0 0 0 / 0.6);
+  --lift-3: 0 24px 64px -16px rgb(0 0 0 / 0.7);
+  --glass: rgb(16 22 58 / 0.72);
 }
 
-/*
- * Irradiance — light sources, not a gradient.
- *
- * Four discrete blurred lights sit off the edges of a fixed layer and bleed
- * inward; a veil of the page's own background sits on top so the middle of the
- * canvas stays clean. Nothing carrying data is ever painted on this: cards are
- * opaque and float above it. That is what keeps a dense table readable while
- * the page still glows.
- */
-@utility irradiance {
-  position: fixed;
-  inset: -30%;
-  z-index: 0;
-  pointer-events: none;
-  filter: blur(110px);
-  background:
-    radial-gradient(26% 22% at 84% 8%, var(--irr-2) 0%, transparent 70%),
-    radial-gradient(24% 20% at 96% 40%, var(--irr-4) 0%, transparent 72%),
-    radial-gradient(30% 26% at 4% 16%, var(--irr-1) 0%, transparent 72%),
-    radial-gradient(22% 18% at 16% 86%, var(--irr-3) 0%, transparent 72%),
-    radial-gradient(34% 28% at 66% 96%, var(--irr-1) 0%, transparent 74%);
-}
-@utility irradiance-veil {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background: var(--irr-veil);
+/* display type: landing headlines only */
+@utility display {
+  font-family: var(--font-google-sans), system-ui, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
 }
 
-/* glossy surface — fill, top edge, lift. No ornament. */
-@utility glossy {
-  position: relative;
-  background: linear-gradient(180deg, var(--gloss-top) 0%, transparent 46%),
-    var(--card);
+/* the highlight: Instrument Serif italic, for one phrase per block */
+@utility serif-highlight {
+  font-family: var(--font-instrument-serif), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* label: sentence case, semibold, secondary. Stat captions, table headers. */
+@utility label-caps {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.19;
+  color: var(--label-2);
+}
+
+/* level 1: a card on the canvas */
+@utility card-soft {
+  background: var(--card);
   border: 1px solid var(--border);
-  box-shadow: var(--lift);
-  overflow: hidden;
+  box-shadow: var(--lift-1);
 }
-@utility glossy-edge {
-  position: relative;
-  &::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 14%;
-    right: 14%;
-    height: 1px;
-    pointer-events: none;
-    background: linear-gradient(90deg, transparent, var(--gloss-edge), transparent);
+.dark .card-soft {
+  border-color: transparent;
+}
+
+/* level 2 glass: floating navigation only, never content */
+@utility glass-pill {
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  box-shadow: var(--lift-2);
+}
+@supports not (backdrop-filter: blur(1px)) {
+  .glass-pill { background: var(--card); }
+}
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  .glass-pill {
+    background: var(--card);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 }
 
-/* uppercase label — eyebrows, table headers, stat captions */
-@utility label-caps {
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
-  color: var(--muted-foreground);
-}
-
-/* the script face, used sparingly for human asides */
-@utility script {
-  font-family: var(--font-script), cursive;
-  font-weight: 500;
-  letter-spacing: 0.005em;
-  line-height: 1.25;
-}
-
-/* soft elevated card — depth by shadow in light, by tone in dark */
-@utility card-soft {
+/* kept for older call sites; same as card-soft */
+@utility glossy {
+  position: relative;
+  background: var(--card);
   border: 1px solid var(--border);
-  box-shadow: 0 10px 40px -12px rgb(60 30 110 / 0.10);
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  box-shadow: var(--lift-1);
+  overflow: hidden;
 }
 
-/* frosted pill for header chips */
-@utility glass-pill {
-  background: color-mix(in srgb, var(--card) 72%, transparent);
-  backdrop-filter: blur(16px) saturate(150%);
-  border: 1px solid var(--border);
+/* skeuomorphic key: a physical keycap on a console. The cap catches light on
+   its top edge, sits 4px proud of its base, and sinks into the well when
+   pressed. Public site only; the app keeps flat controls. */
+@utility key {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding-inline: 1.125rem;
+  border-radius: 14px;
+  color: #F6EBDE;
+  background: linear-gradient(180deg, #2B3570 0%, #1B2257 7%, #161C48 55%, #10153A 100%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.22),
+    inset 0 -2px 0 rgb(0 0 0 / 0.35),
+    0 0 0 1px rgb(3 5 20 / 0.9),
+    0 4px 0 0 #04061A,
+    0 9px 18px -6px rgb(0 0 0 / 0.7);
+  transform: translateY(0);
+  transition:
+    transform var(--dur-1) var(--ease-arrive),
+    box-shadow var(--dur-1) var(--ease-arrive),
+    filter var(--dur-1) var(--ease-arrive);
+  -webkit-tap-highlight-color: transparent;
+  &:hover {
+    filter: brightness(1.12);
+  }
+  &:focus-visible {
+    outline: 2px solid #E9B949;
+    outline-offset: 3px;
+  }
+  &:active {
+    transform: translateY(3px);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.12),
+      inset 0 2px 6px rgb(0 0 0 / 0.45),
+      0 0 0 1px rgb(3 5 20 / 0.9),
+      0 1px 0 0 #04061A,
+      0 3px 6px -3px rgb(0 0 0 / 0.6);
+  }
+}
+
+/* gold cap: the one primary action on the console */
+@utility key-gold {
+  color: #0B1030;
+  background: linear-gradient(180deg, #FBE3A0 0%, #F0C863 8%, #E9B949 55%, #D9A532 100%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.65),
+    inset 0 -2px 0 rgb(120 80 0 / 0.35),
+    0 0 0 1px #6E4E00,
+    0 4px 0 0 #6E4E00,
+    0 9px 18px -6px rgb(0 0 0 / 0.7);
+  &:active {
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.4),
+      inset 0 2px 6px rgb(110 78 0 / 0.5),
+      0 0 0 1px #6E4E00,
+      0 1px 0 0 #6E4E00,
+      0 3px 6px -3px rgb(0 0 0 / 0.6);
+  }
+}
+
+/* the indicator lamp inside a key; lit gold when the key is current */
+@utility key-lamp {
+  width: 6px;
+  height: 6px;
+  flex-shrink: 0;
   border-radius: 9999px;
+  background: #2A2F55;
+  box-shadow: inset 0 1px 1px rgb(0 0 0 / 0.6);
+  transition: background var(--dur-2) var(--ease-arrive), box-shadow var(--dur-2) var(--ease-arrive);
+  [aria-current] > & {
+    background: #FFD978;
+    box-shadow: 0 0 0 1px rgb(233 185 73 / 0.5), 0 0 10px 2px rgb(233 185 73 / 0.75);
+  }
 }
 
-/* horizontal overflow slider — charts & tables keep their desktop form on
-   mobile and slide inside the card; edge fade hints at more content */
+/* the console the keys sit in: a recessed plate */
+@utility console {
+  border-radius: 22px;
+  background: linear-gradient(180deg, #0A0F2E 0%, #070B24 100%);
+  box-shadow:
+    inset 0 2px 6px rgb(0 0 0 / 0.65),
+    inset 0 -1px 0 rgb(255 255 255 / 0.06),
+    0 0 0 1px rgb(255 255 255 / 0.07),
+    0 20px 40px -12px rgb(0 0 0 / 0.65);
+}
+
+/* the public site's dark sections: the stage-blue ring would vanish on midnight */
+.bg-midnight :focus-visible,
+.bg-midnight-2 :focus-visible {
+  outline-color: #E9B949;
+}
+
+@media (prefers-contrast: more) {
+  .key {
+    background: #10153A;
+    outline: 1px solid #F6EBDE;
+  }
+}
+
+/* horizontal overflow slider: charts and tables keep their desktop form on
+   mobile and slide inside the card; the edge fade hints at more content */
 @utility scroll-x {
   overflow-x: auto;
   overscroll-behavior-x: contain;
@@ -292,15 +399,28 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
   }
   body {
     @apply bg-background text-foreground font-sans antialiased;
     overflow-x: clip;
   }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
 }
 
-.dark .card-soft {
-  border-color: transparent;
-  box-shadow: none;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

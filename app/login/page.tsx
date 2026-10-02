@@ -8,7 +8,7 @@ export const metadata = { title: "Sign in · Cell Ministry System" };
 export default async function LoginPage() {
   // Already signed in? Skip the wall.
   const session = await getSession();
-  if (session?.role === "admin") redirect("/");
+  if (session?.role === "admin") redirect("/dashboard");
   if (session?.role === "caller") redirect("/contacts");
 
   const roster = await callerRoster();

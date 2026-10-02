@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { createCaller, deleteCaller, assignCaller } from "@/app/caller/actions";
+import { createCaller, deleteCaller, assignCaller } from "@/app/(app)/caller/actions";
 
 interface RosterCaller {
   id: string;

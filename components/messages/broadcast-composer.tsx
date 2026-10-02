@@ -18,7 +18,7 @@ import {
   type SmsProviderId,
   type SmsRoute,
 } from "@/lib/sms";
-import { sendBroadcast } from "@/app/messages/actions";
+import { sendBroadcast } from "@/app/(app)/messages/actions";
 
 interface Recipient {
   id: string;

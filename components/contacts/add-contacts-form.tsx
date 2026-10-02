@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type { GroupNode } from "@/lib/types";
-import { saveContacts, type SaveContactsResult } from "@/app/contacts/new/actions";
+import { saveContacts, type SaveContactsResult } from "@/app/(app)/contacts/new/actions";
 
 interface ParsedRow {
   name: string;

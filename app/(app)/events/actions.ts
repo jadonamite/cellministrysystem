@@ -12,7 +12,7 @@ export async function setActiveEvent(formData: FormData) {
   const store = await cookies();
   store.set("active_event", id, { path: "/", maxAge: 60 * 60 * 24 * 90 });
   revalidatePath("/", "layout");
-  redirect("/");
+  redirect("/dashboard");
 }
 
 export interface EventFormInput {

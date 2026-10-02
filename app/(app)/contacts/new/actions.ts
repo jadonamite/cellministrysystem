@@ -70,7 +70,7 @@ export async function saveContacts(input: SaveContactsInput): Promise<SaveContac
       });
       revalidateTag("outreach", "max");
       revalidatePath("/contacts");
-      revalidatePath("/");
+      revalidatePath("/dashboard");
       // The API re-dedupes against contacts already on the event; add its skips.
       return {
         ok: true,
@@ -84,6 +84,6 @@ export async function saveContacts(input: SaveContactsInput): Promise<SaveContac
 
   // Demo stub: persist nothing, report the batch-local counts.
   revalidatePath("/contacts");
-  revalidatePath("/");
+  revalidatePath("/dashboard");
   return { ok: true, saved: clean.length, skipped };
 }

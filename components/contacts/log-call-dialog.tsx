@@ -19,7 +19,7 @@ import {
   type Disposition,
 } from "@/lib/outreach";
 import { DEFAULT_INVITE, fillInvite, telLink, waLink } from "@/lib/contact-links";
-import { logOutcome } from "@/app/contacts/actions";
+import { logOutcome } from "@/app/(app)/contacts/actions";
 
 /** Outcomes a *call* can end in (messaged is the WhatsApp path). */
 const CALL_STEP_OUTCOMES: CallOutcome[] = [

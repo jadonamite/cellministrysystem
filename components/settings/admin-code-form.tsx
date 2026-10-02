@@ -2,7 +2,7 @@
 
 import { useActionState, useEffect, useRef } from "react";
 import { Icon, Spinner } from "@/components/icons";
-import { changeAdminCode, type AdminCodeResult } from "@/app/settings/actions";
+import { changeAdminCode, type AdminCodeResult } from "@/app/(app)/settings/actions";
 
 const initial: AdminCodeResult = {};
 

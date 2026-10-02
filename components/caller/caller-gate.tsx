@@ -9,7 +9,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { setCaller, clearCaller } from "@/app/caller/actions";
+import { setCaller, clearCaller } from "@/app/(app)/caller/actions";
 
 /**
  * Per-device caller gate. A call can only be logged while signed in as a caller,

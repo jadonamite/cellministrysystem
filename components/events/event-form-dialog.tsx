@@ -9,7 +9,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { saveEvent } from "@/app/events/actions";
+import { saveEvent } from "@/app/(app)/events/actions";
 import type { OutreachEvent } from "@/lib/events";
 
 /** Pull yyyy-mm-dd / HH:mm straight from the offset ISO (avoids TZ drift). */

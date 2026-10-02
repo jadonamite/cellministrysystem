@@ -9,7 +9,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { deleteContact } from "@/app/contacts/actions";
+import { deleteContact } from "@/app/(app)/contacts/actions";
 
 /**
  * Admin-only delete for a fake/invalid contact. Opens a confirm dialog, then

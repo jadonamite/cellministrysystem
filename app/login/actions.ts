@@ -55,7 +55,7 @@ export async function adminLogin(_prev: LoginResult, formData: FormData): Promis
 
   const store = await cookies();
   store.set(SESSION_COOKIE, await signAdminSession(), cookieOptions());
-  redirect("/");
+  redirect("/dashboard");
 }
 
 function envCodeMatches(code: string): boolean {
