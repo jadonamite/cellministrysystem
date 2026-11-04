@@ -106,10 +106,12 @@ function Pills({ active, tone }: { active: string | null; tone: "clear" | "regul
               className={cn(
                 "inline-flex min-h-11 items-center rounded-full px-4 text-[0.9375rem] font-medium whitespace-nowrap transition-colors duration-150",
                 clear
-                  ? "text-white hover:bg-white/15"
+                  ? current
+                    ? "bg-white/20 text-white"
+                    : "text-white/80 hover:bg-white/12 hover:text-white"
                   : current
-                    ? "bg-ink text-cream"
-                    : "text-ink hover:bg-ink/[0.06]",
+                    ? "bg-ink text-white"
+                    : "text-ink/80 hover:bg-ink/[0.06] hover:text-ink",
               )}
             >
               {s.label}
@@ -120,7 +122,12 @@ function Pills({ active, tone }: { active: string | null; tone: "clear" | "regul
       <li className={cn("shrink-0", !clear && "hidden sm:block")}>
         <Link
           href="/login"
-          className="inline-flex min-h-11 items-center rounded-full bg-highlight px-5 text-[0.9375rem] font-semibold whitespace-nowrap text-highlight-foreground transition-opacity duration-150 hover:opacity-90"
+          className={cn(
+            "inline-flex min-h-11 items-center rounded-full px-5 text-[0.9375rem] font-semibold whitespace-nowrap transition-all duration-150 active:scale-[0.98]",
+            clear
+              ? "bg-white text-ink hover:bg-white/90 shadow-sm"
+              : "bg-ink text-white hover:bg-black shadow-sm",
+          )}
         >
           Sign in
         </Link>

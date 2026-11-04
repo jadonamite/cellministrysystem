@@ -9,10 +9,10 @@ export function LiveEvent() {
     <section id="live-event" className="scroll-mt-4 bg-cream px-4 pb-24 text-ink sm:px-10 sm:pb-32">
       <div className="mx-auto max-w-5xl">
         <h2 className="display text-[clamp(2.5rem,7vw,5.5rem)]">
-          Live <span className="serif-highlight text-stage">event</span>
+          Live <span className="serif-highlight text-ink">event</span>
         </h2>
 
-        <div className="mt-12 grid overflow-hidden rounded-[32px] bg-white shadow-[0_24px_48px_-28px_rgb(11_16_48/0.35)] md:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
+        <div className="card-3d card-3d-hover mt-12 grid overflow-hidden rounded-[32px] md:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
           <FlyerButton photo={e.flyer} alt={e.flyerAlt} title={e.name} className="block w-full rounded-none hover:scale-100 active:scale-100">
             <span className="relative block aspect-[566/640] w-full md:h-full">
               <Image src={e.flyer} alt={e.flyerAlt} fill sizes="(min-width: 768px) 45vw, 100vw" className="object-cover" />
@@ -20,7 +20,7 @@ export function LiveEvent() {
           </FlyerButton>
 
           <div className="flex flex-col justify-center gap-6 p-6 sm:p-10">
-            <span className="inline-flex self-start rounded-full bg-highlight px-4 py-1.5 text-[0.875rem] font-semibold text-highlight-foreground">
+            <span className="inline-flex self-start rounded-full bg-ink px-4 py-1.5 text-[0.875rem] font-semibold text-white">
               Coming up
             </span>
             <div>
@@ -36,7 +36,7 @@ export function LiveEvent() {
                 <dt className="text-[0.8125rem] font-semibold text-ink/65">Ministering</dt>
                 <dd className="mt-1">
                   {e.speaker}
-                  <span className="ml-2 rounded-full bg-stage px-2.5 py-0.5 text-[0.8125rem] font-semibold text-white">
+                  <span className="ml-2 rounded-full bg-ink/10 px-2.5 py-0.5 text-[0.8125rem] font-semibold text-ink">
                     {e.speakerNote}
                   </span>
                 </dd>
@@ -50,7 +50,7 @@ export function LiveEvent() {
               href={INSTAGRAM_URL}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex min-h-11 items-center self-start rounded-full bg-stage px-6 text-[0.9375rem] font-semibold text-white transition-opacity duration-150 hover:opacity-90"
+              className="inline-flex min-h-11 items-center self-start rounded-full bg-ink px-6 text-[0.9375rem] font-semibold text-white transition-opacity duration-150 hover:bg-black"
             >
               Follow for updates
             </a>

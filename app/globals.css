@@ -19,12 +19,12 @@
   --color-highlight-foreground: var(--highlight-foreground);
   --color-gold: var(--gold);
   --color-gold-soft: var(--gold-soft);
-  --color-midnight: #070B24;
-  --color-midnight-2: #10163A;
-  --color-stage: #1E40D8;
-  --color-cream: #F6EBDE;
-  --color-ink: #0B1030;
-  --color-magenta: #C2187A;
+  --color-midnight: #070A12;
+  --color-midnight-2: #0F1320;
+  --color-stage: #0B0E17;
+  --color-cream: #F8F9FA;
+  --color-ink: #0B0E17;
+  --color-magenta: #0B0E17;
   --color-team-1: var(--team-1);
   --color-team-2: var(--team-2);
   --color-team-3: var(--team-3);
@@ -79,33 +79,33 @@
 :root {
   color-scheme: light;
 
-  --background: #F7F3EC;
-  --foreground: #0B1030;
-  --label-2: #4A4F66;
-  --label-3: #666B84;
+  --background: #F8F9FA;
+  --foreground: #0B0E17;
+  --label-2: #525866;
+  --label-3: #717784;
   --card: #FFFFFF;
-  --card-foreground: #0B1030;
+  --card-foreground: #0B0E17;
   --popover: #FFFFFF;
-  --popover-foreground: #0B1030;
+  --popover-foreground: #0B0E17;
 
-  --primary: #1E40D8;
+  --primary: #0B0E17;
   --primary-foreground: #FFFFFF;
-  --band: #1E40D8;
-  --highlight: #E9B949;
-  --highlight-foreground: #0B1030;
-  --gold: #8A6300;
-  --gold-soft: #FBF0D4;
+  --band: #0B0E17;
+  --highlight: #0B0E17;
+  --highlight-foreground: #FFFFFF;
+  --gold: #0B0E17;
+  --gold-soft: #F0F1F3;
 
-  --secondary: #EDE8DF;
-  --secondary-foreground: #0B1030;
-  --muted: #EFEAE1;
-  --muted-foreground: #4A4F66;
-  --accent: #E6EAFB;
-  --accent-foreground: #1E40D8;
+  --secondary: #F0F1F3;
+  --secondary-foreground: #0B0E17;
+  --muted: #F0F1F3;
+  --muted-foreground: #525866;
+  --accent: #F0F1F3;
+  --accent-foreground: #0B0E17;
   --destructive: #C4352B;
-  --border: #E2DCD0;
-  --input: #D8D1C3;
-  --ring: #1E40D8;
+  --border: #E5E7EB;
+  --input: #E5E7EB;
+  --ring: #0B0E17;
 
   --team-1: #1E40D8; /* stage blue */
   --team-2: #B07D00; /* gold       */
@@ -236,6 +236,48 @@
   border-color: transparent;
 }
 
+/* 3D card with layered ambient occlusion, keylight depth shadows, bevel rim, and hover lift */
+@utility card-3d {
+  background: var(--card);
+  border: 1px solid rgb(11 14 23 / 0.08);
+  box-shadow:
+    0 1px 3px rgb(11 14 23 / 0.04),
+    0 10px 24px -4px rgb(11 14 23 / 0.09),
+    0 30px 60px -15px rgb(11 14 23 / 0.16),
+    inset 0 1px 0 0 rgb(255 255 255 / 0.9);
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@utility card-3d-hover {
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow:
+      0 2px 5px rgb(11 14 23 / 0.04),
+      0 18px 36px -6px rgb(11 14 23 / 0.14),
+      0 42px 80px -18px rgb(11 14 23 / 0.22),
+      inset 0 1px 0 0 rgb(255 255 255 / 0.95);
+  }
+}
+
+/* 3D physical print flyer: realistic layered cast shadow, bevel rim, and hover float */
+@utility flyer-3d {
+  box-shadow:
+    0 4px 8px -2px rgb(11 14 23 / 0.08),
+    0 14px 28px -4px rgb(11 14 23 / 0.15),
+    0 32px 64px -16px rgb(11 14 23 / 0.25),
+    inset 0 1px 0 0 rgb(255 255 255 / 0.5);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@utility flyer-3d-hover {
+  &:hover {
+    transform: translateY(-6px) scale(1.015);
+    box-shadow:
+      0 6px 12px -2px rgb(11 14 23 / 0.08),
+      0 22px 44px -6px rgb(11 14 23 / 0.2),
+      0 48px 90px -20px rgb(11 14 23 / 0.32),
+      inset 0 1px 0 0 rgb(255 255 255 / 0.7);
+  }
+}
+
 /* level 2 glass: floating navigation only, never content */
 @utility glass-pill {
   background: var(--glass);
@@ -269,21 +311,21 @@
    clear: floats over the hero photo, which is already dimmed, so no extra dimming.
    regular: the docked bar over light content; opaque enough to hold text contrast. */
 @utility glass-clear {
-  background: rgb(255 255 255 / 0.14);
+  background: rgb(255 255 255 / 0.1);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
   backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgb(255 255 255 / 0.22);
-  box-shadow: 0 10px 30px -12px rgb(0 0 0 / 0.45);
+  border: 1px solid rgb(255 255 255 / 0.18);
+  box-shadow: 0 10px 30px -12px rgb(0 0 0 / 0.5);
 }
 @utility glass-regular {
-  background: rgb(255 255 255 / 0.72);
+  background: rgb(255 255 255 / 0.85);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
   backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgb(11 16 48 / 0.08);
-  box-shadow: 0 12px 32px -12px rgb(11 16 48 / 0.28);
+  border: 1px solid rgb(11 14 23 / 0.1);
+  box-shadow: 0 12px 32px -12px rgb(11 14 23 / 0.18);
 }
 @supports not (backdrop-filter: blur(1px)) {
-  .glass-clear { background: rgb(7 11 36 / 0.92); }
+  .glass-clear { background: rgb(7 10 18 / 0.95); }
   .glass-regular { background: #FFFFFF; }
 }
 @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
@@ -292,13 +334,13 @@
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
   }
-  .glass-clear { background: #070B24; border-color: rgb(255 255 255 / 0.5); }
-  .glass-regular { background: #FFFFFF; border-color: #0B1030; }
+  .glass-clear { background: #070A12; border-color: rgb(255 255 255 / 0.4); }
+  .glass-regular { background: #FFFFFF; border-color: #0B0E17; }
 }
 
-/* the public site's dark hero: the stage-blue ring would vanish on the photo */
+/* the public site's dark hero focus ring */
 .bg-midnight :focus-visible {
-  outline-color: #E9B949;
+  outline-color: #FFFFFF;
 }
 
 /* horizontal overflow slider: charts and tables keep their desktop form on

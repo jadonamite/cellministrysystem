@@ -50,7 +50,7 @@ export function JoinUs() {
       <li className="flex w-[min(84vw,26rem)] shrink-0 flex-col justify-center pr-2 sm:pr-8">
         <p className="text-[0.8125rem] font-semibold tracking-[0.12em] text-ink/70 uppercase">Join us</p>
         <h2 className="display mt-4 text-[clamp(2.75rem,6.5vw,5.25rem)]">
-          Come <span className="serif-highlight text-stage">worship</span> with us
+          Come <span className="serif-highlight text-ink">worship</span> with us
         </h2>
         <p className="mt-5 max-w-[30ch] text-[1.0625rem] leading-[1.5] text-ink/75">
           Sunday and Wednesday services are held at {VENUE.name}, {VENUE.address.split(", ").slice(0, 3).join(", ")}.
@@ -67,13 +67,13 @@ export function JoinUs() {
             photo={f.flyer}
             alt={f.alt}
             title={f.title}
-            className="block rounded-[20px] hover:scale-100 active:scale-[0.99]"
+            className="group block rounded-[24px] focus:outline-none"
           >
             <Image
               src={f.flyer}
               alt={f.alt}
               sizes="(min-width: 640px) 26rem, 75vw"
-              className="h-[min(56svh,32rem)] w-auto rounded-[20px] shadow-[0_24px_48px_-24px_rgb(11_16_48/0.45)]"
+              className="h-[min(56svh,32rem)] w-auto rounded-[24px] flyer-3d flyer-3d-hover border border-black/[0.08]"
             />
           </FlyerButton>
           <p className="mt-4 text-[1.0625rem] leading-tight font-semibold">{f.title}</p>
@@ -81,7 +81,7 @@ export function JoinUs() {
         </li>
       ))}
 
-      <li className="flex h-[min(56svh,32rem)] w-[min(80vw,22rem)] shrink-0 snap-center flex-col justify-end rounded-[24px] bg-white p-7 shadow-[0_24px_48px_-24px_rgb(11_16_48/0.3)]">
+      <li className="card-3d card-3d-hover flex h-[min(56svh,32rem)] w-[min(80vw,22rem)] shrink-0 snap-center flex-col justify-end rounded-[28px] p-8">
         <p className="text-[0.8125rem] font-semibold tracking-[0.12em] text-ink/70 uppercase">The venue</p>
         <p className="display mt-3 text-[2.5rem]">{VENUE.name}</p>
         <p className="mt-3 text-[1rem] leading-[1.45] text-ink/75">{VENUE.address}</p>
@@ -89,7 +89,7 @@ export function JoinUs() {
           href={VENUE.mapsUrl}
           target="_blank"
           rel="noreferrer"
-          className="mt-6 inline-flex min-h-11 items-center self-start rounded-full bg-stage px-5 text-[0.9375rem] font-semibold text-white transition-opacity duration-150 hover:opacity-90"
+          className="mt-6 inline-flex min-h-11 items-center self-start rounded-full bg-ink px-5 text-[0.9375rem] font-semibold text-white shadow-md transition-all duration-150 hover:bg-black hover:scale-105 active:scale-95"
         >
           Get directions
         </a>
@@ -119,7 +119,7 @@ export function JoinUs() {
           {items}
         </motion.ul>
         <div aria-hidden className="absolute inset-x-4 bottom-[max(100px,calc(env(safe-area-inset-bottom)+92px))] h-[3px] overflow-hidden rounded-full bg-ink/10 sm:inset-x-10">
-          <motion.div style={{ scaleX: progress }} className="h-full origin-left rounded-full bg-stage" />
+          <motion.div style={{ scaleX: progress }} className="h-full origin-left rounded-full bg-ink" />
         </div>
       </div>
     </section>

@@ -77,7 +77,7 @@ export function Gallery({ photos }: { photos: GalleryPhoto[] }) {
       <div className="px-4 text-center sm:px-10">
         <p className="text-[0.8125rem] font-semibold tracking-[0.12em] text-ink/70 uppercase">Gallery</p>
         <h2 className="display mt-4 text-[clamp(2.75rem,7vw,5.75rem)]">
-          Moments from <span className="serif-highlight text-stage">Zone G.</span>
+          Moments from <span className="serif-highlight text-ink">Zone G.</span>
         </h2>
         <p className="mx-auto mt-4 max-w-[40ch] text-[1rem] leading-[1.5] text-ink/70">
           Straight from the photographers. The selection changes through the day.
@@ -100,7 +100,7 @@ export function Gallery({ photos }: { photos: GalleryPhoto[] }) {
                   kind="photo"
                   className="group block w-full rounded-[24px] hover:scale-100 active:scale-[0.99]"
                 >
-                  <span className="relative block aspect-[4/5] overflow-hidden rounded-[24px] bg-ink/5 shadow-[0_30px_60px_-30px_rgb(11_16_48/0.55)]">
+                  <span className="relative block aspect-[4/5] overflow-hidden rounded-[26px] bg-ink/5 shadow-[0_8px_16px_-4px_rgb(11_14_23/0.12),0_24px_48px_-12px_rgb(11_14_23/0.25),0_40px_80px_-20px_rgb(11_14_23/0.35),inset_0_1px_0_0_rgb(255_255_255/0.4)] border border-black/[0.08] transition-transform duration-300 group-hover:scale-[1.02]">
                     <Photo photo={p} />
                   </span>
                 </FlyerButton>
@@ -118,7 +118,7 @@ export function Gallery({ photos }: { photos: GalleryPhoto[] }) {
           href={INSTAGRAM_URL}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex min-h-11 items-center rounded-full bg-stage px-5 text-[0.9375rem] font-semibold text-white transition-opacity duration-150 hover:opacity-90"
+          className="inline-flex min-h-11 items-center rounded-full bg-ink px-5 text-[0.9375rem] font-semibold text-white transition-opacity duration-150 hover:bg-black"
         >
           More on @globalzoneg
         </a>

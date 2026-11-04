@@ -19,7 +19,7 @@ export function Excerpts() {
       <div className="px-4 sm:px-10">
         <p className="text-[0.8125rem] font-semibold tracking-[0.12em] text-ink/70 uppercase">From the service</p>
         <h2 className="display mt-4 max-w-[16ch] text-[clamp(2.75rem,6.5vw,5.25rem)]">
-          Recaps and <span className="serif-highlight text-stage">excerpts</span>
+          Recaps and <span className="serif-highlight text-ink">excerpts</span>
         </h2>
       </div>
       <div className="mt-14 space-y-16 sm:mt-20 sm:space-y-20">
@@ -29,7 +29,7 @@ export function Excerpts() {
       </div>
       <p className="mt-14 px-4 text-[1rem] text-ink/75 sm:px-10">
         New sets go up after each service on{" "}
-        <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer" className="font-semibold text-stage underline underline-offset-4">
+        <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer" className="font-semibold text-ink underline underline-offset-4 hover:opacity-80">
           @globalzoneg
         </a>
         .
@@ -67,20 +67,20 @@ function Row({ set }: { set: ExcerptSet }) {
         className="mt-6 flex snap-x snap-mandatory scroll-px-4 gap-4 overflow-x-auto px-4 pb-2 [scrollbar-width:none] sm:scroll-px-10 sm:gap-5 sm:px-10"
       >
         {set.slides.map((src, i) => (
-          <li key={src} className="w-[min(72vw,20rem)] shrink-0 snap-start">
+          <li key={src} className="w-[min(72vw,20rem)] shrink-0 snap-start py-4">
             <FlyerButton
               photo={{ src, ...SLIDE }}
               alt={`${set.title}, slide ${i + 1} of ${set.slides.length}`}
               title={`${set.title} slide ${i + 1}`}
               kind="photo"
-              className="block w-full rounded-[18px] hover:scale-100 active:scale-[0.99]"
+              className="group block w-full rounded-[22px] focus:outline-none"
             >
               <Image
                 src={src}
                 alt={`${set.title}, slide ${i + 1} of ${set.slides.length}`}
                 {...SLIDE}
                 sizes="(min-width: 640px) 20rem, 72vw"
-                className="h-auto w-full rounded-[18px] bg-ink/5"
+                className="h-auto w-full rounded-[22px] flyer-3d flyer-3d-hover border border-black/[0.08] bg-ink/5"
               />
             </FlyerButton>
           </li>
